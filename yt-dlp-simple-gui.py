@@ -1,6 +1,7 @@
 import subprocess
 from subprocess import CalledProcessError
 import shlex
+import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
@@ -27,7 +28,12 @@ def download_video():
         # 使用subprocess模块运行命令并显示命令行窗口
         subprocess.run(shlex.split(command), check=True)
         
-        messagebox.showinfo("下载完成", "视频下载完成！")
+        if messagebox.askyesno("成功", "视频下载完成！\n"
+                              "是否要打开文件夹？"):
+            abs_folder = os.path.abspath(save_folder)
+            if not os.path.exists(abs_folder):
+                os.makedirs(abs_folder)
+            os.startfile(abs_folder)
     except CalledProcessError as e:
         messagebox.showerror("下载失败", f"下载过程中出现错误：{e.output.decode('utf-8')}")
 
@@ -48,7 +54,12 @@ def download_bilibili_video():
         # 使用subprocess模块运行命令并显示命令行窗口
         subprocess.run(shlex.split(command), check=True)
         
-        messagebox.showinfo("成功", "下载完成！")
+        if messagebox.askyesno("成功", "下载完成！\n"
+                              "是否要打开文件夹？"):
+            abs_folder = os.path.abspath(save_folder)
+            if not os.path.exists(abs_folder):
+                os.makedirs(abs_folder)
+            os.startfile(abs_folder)
     except CalledProcessError as e:
         messagebox.showerror("失败", f"下载过程中出现错误：{e.output.decode('utf-8')}")
 
