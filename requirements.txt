@@ -1,0 +1,6 @@
+yt-dlp 
+mutagen
+pycryptodomex
+websockets
+certifi 
+brotli
