@@ -1,6 +1,4 @@
-import subprocess
-from subprocess import CalledProcessError
-import shlex
+import yt_dlp
 import re
 import os
 import tkinter as tk
@@ -29,33 +27,63 @@ def download_video():
     recode_video_format = selected_recode_video.get()
     download_thumbnail = download_thumbnail_var.get()
 
-    if save_folder == "":
-        save_folder = "./"  # 默认为当前文件夹
+    # 所有下载参数
+    ytdl_opts = {
+        'outtmpl': f"{save_folder}/%(title)s.%(ext)s",
+        'format': f'bestvideo[height<={video_quality}][ext={video_format}]+bestaudio[ext={audio_format}]/best[height<={video_quality}][ext={video_format}]',
+        'default_search': 'auto',
+        'noplaylist': True,
+        'postprocessors': [],
+    }
 
-    #命令行代码，添加命令时一定要在前面加一个空格
-    cmd_append = ""
+    # 更新字幕参数
+    ytdl_opts.update(subtitle_command())
 
+    # 如果是bilibili的链接
     if is_bilibili_url(video_link):
-        cmd_append += f" --cookies-from-browser {browser_to_import_cookie}"
-
-    if recode_video:
-        cmd_append += f" --recode-video {recode_video_format}"
+        ytdl_opts["cookiesfrombrowser"] = (browser_to_import_cookie, None, None, None) # 从浏览器导入cookie
 
     if download_thumbnail:
-        cmd_append += f" --write-thumbnail {video_link} --convert-thumbnails jpg"
+        ytdl_opts['writethumbnail'] = True  # 是否下载视频缩略图
+        ytdl_opts['postprocessors'].append({
+            'key': 'FFmpegThumbnailsConvertor',
+            'format': 'jpg',
+        })
 
+    # 如果想重新编码视频
+    if recode_video:
+        ytdl_opts['postprocessors'].append({
+            'key': 'FFmpegVideoConvertor',
+            'preferedformat': recode_video_format # 设置重新编码的格式
+        })
+
+    # 如果只想下载音频
     if only_download_audio:
-        cmd_append += f" -x --audio-format {audio_format}"
-        if audio_quality != '0':
-            cmd_append += f" --audio-quality {audio_quality}"
-    
-    command = f"./yt-dlp.exe {video_link} -f 'bestvideo[height<={video_quality}][ext={video_format}]+bestaudio[ext={audio_format}]/best[height<={video_quality}][ext={video_format}]' --paths \"{save_folder}\"" + cmd_append + subtitle_command()
-    print("执行命令：\n"+command)
-    #return
-    
-    run_ytdlp(command, save_folder)
+        ytdl_opts['format'] = f"{audio_format}/bestaudio/best"
+        ytdl_opts['postprocessors'].append({
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': audio_format,
+            'preferredquality': audio_quality
+        })
 
-# 字幕指令格式化
+    #for key, value in ytdl_opts.items():
+    #    print(f'{key}: {value}')
+
+    try:
+        with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
+            ytdl.download([video_link])
+        
+        if messagebox.askyesno("成功", "下载完成!\n"
+                            "是否要打开文件夹?"):
+            abs_folder = os.path.abspath(save_folder)
+            if not os.path.exists(abs_folder):
+                os.makedirs(abs_folder)
+            os.startfile(abs_folder)
+    except Exception as e:
+        error_message = str(e) 
+        messagebox.showerror("失败", error_message)
+
+# 字幕参数设置
 def subtitle_command():
     subtitle_setting = selected_subtitle_setting.get()
     subtitle_format = subtitle_format_var.get()
@@ -63,45 +91,43 @@ def subtitle_command():
     needs_translation = needs_translation_checkbox_var.get()
     subtitle_trans_dest_lang = translation_dest_lang.get()
     embed_sub = embed_sub_checkbox_var.get()
-    
-    if needs_translation:
-        LANGUAGE_CODE = f"{subtitle_trans_dest_lang}-{subtitle_langs}"
-        formatted_subtitle_command = f" --write-auto-subs --sub-format {subtitle_format} --sub-langs {LANGUAGE_CODE}"
+    download_all_subs = all_subtitles_checkbox_var.get()
+
+    sub_options = {
+        'writesubtitles': True if subtitle_setting != 2 else False,
+        'writeautomaticsub': True if needs_translation else False,
+        'subtitleslangs': [],
+        'subtitlesformat': subtitle_format,
+        'embedsubtitles': embed_sub,
+        'skip_download': True if subtitle_setting == 0 else False,
+        'postprocessors': [{
+            'key': 'FFmpegSubtitlesConvertor',
+            'format': subtitle_format,
+        }]
+    }
+
+    if download_all_subs:
+        sub_options['subtitleslangs'].append('all')
     else:
-        LANGUAGE_CODE = subtitle_langs
-        formatted_subtitle_command = f" --write-subs --sub-format {subtitle_format} --sub-langs {LANGUAGE_CODE}"
+        sub_options['subtitleslangs'].append(f"{subtitle_trans_dest_lang}-{subtitle_langs}" if needs_translation else subtitle_langs)
 
     if embed_sub:
-        formatted_subtitle_command += f" --embed-subs"
-
-    if subtitle_setting == 2:
-        return ""
-    elif subtitle_setting == 1:
-        return formatted_subtitle_command
-    else:
-        return " --skip-download" + formatted_subtitle_command
-
-# 运行yt-dlp命令并捕获输出
-def run_ytdlp(command, save_folder):
-    try:
-        # 使用subprocess模块运行命令并显示命令行窗口
-        subprocess.run(shlex.split(command), check=True)
+        sub_options['postprocessors'].append({
+            'key': 'FFmpegEmbedSubtitle',
+            'already_have_subtitle': True,
+        })
         
-        if messagebox.askyesno("成功", "下载完成！\n"
-                              "是否要打开文件夹？"):
-            abs_folder = os.path.abspath(save_folder)
-            if not os.path.exists(abs_folder):
-                os.makedirs(abs_folder)
-            os.startfile(abs_folder)
-    except CalledProcessError as e:
-        error_message = e.stderr.decode('utf-8') if e.stderr else "未知错误"
-        messagebox.showerror("失败", f"下载过程中出现错误：{error_message}")
+    return sub_options
 
 # 判断是否为b站网址
 def is_bilibili_url(video_link):
     pattern = r'(https?://)?(www\.)?(bilibili\.com|b23\.tv)'
     match = re.search(pattern, video_link)
     return match is not None
+
+# 更新标签参数
+def update_label(label_var, text):
+    label_var.set(text)
 
 # 创建主窗口
 root = tk.Tk()
@@ -127,6 +153,7 @@ folder_label = tk.Label(root, text="保存文件夹")
 folder_label.grid(row=0, column=0, sticky="e")
 
 folder_entry = tk.Entry(root, width=50)
+folder_entry.insert(tk.END, os.path.abspath("./").replace("\\", "/"))
 folder_entry.grid(row=0, column=1, columnspan=1, padx=10, pady=5, sticky="we")
 
 folder_button = tk.Button(root, text="选择文件夹", command=lambda: folder_entry.delete(0, tk.END) or folder_entry.insert(tk.END, filedialog.askdirectory()))
@@ -144,7 +171,7 @@ selected_subtitle_setting = tk.IntVar()
 selected_subtitle_setting.set(2)
 
 ## 创建单选框
-subtitle_setting_frame = tk.Frame(root)
+subtitle_setting_frame = tk.Frame(root) # 字幕设置框架头
 for i in range(4):
     subtitle_setting_frame.columnconfigure(i, weight=1)
 
@@ -184,7 +211,7 @@ subtitle_langs_var.set("zh-CN")
 subtitle_langs_menu = ttk.Combobox(subtitle_setting_frame, values=sub_langs, textvariable=subtitle_langs_var, width=10)
 subtitle_langs_menu.grid(row=1, column=3, padx=10, pady=5, sticky="we")
 
-#是否内嵌字幕？
+# 是否内嵌字幕？
 embed_sub_checkbox_var = tk.BooleanVar(value=False)
 embed_sub_checkbox = tk.Checkbutton(subtitle_setting_frame, text="内嵌字幕(仅mp4,webm,mkv)", variable=embed_sub_checkbox_var)
 embed_sub_checkbox.grid(row=2, column=0, columnspan=2, sticky="e")
@@ -194,25 +221,30 @@ needs_translation_checkbox_var = tk.BooleanVar(value=False)
 needs_translation_checkbox = tk.Checkbutton(subtitle_setting_frame, text="翻译为", variable=needs_translation_checkbox_var)
 needs_translation_checkbox.grid(row=2, column=2, sticky="we")
 
-#翻译语言选择
+# 翻译语言选择
 translation_dest_lang = tk.StringVar()
 translation_dest_lang.set("en")
 
 translation_dest_lang_menu = ttk.Combobox(subtitle_setting_frame, values=sub_langs, textvariable=translation_dest_lang, width=10)
 translation_dest_lang_menu.grid(row=2, column=3, columnspan=1, padx=10, pady=5, sticky="we")
 
-#分割线
+# 分割线
 separator = ttk.Separator(subtitle_setting_frame, orient='horizontal')
 separator.grid(row=3, column=0, columnspan=4, padx=10, pady=10, sticky="we")
 
-subtitle_setting_frame.grid(row=1, column=1, sticky="we")
+subtitle_setting_frame.grid(row=1, column=1, sticky="we") # 字幕设置框架尾
+
+# 是否需要字幕全部下载？
+all_subtitles_checkbox_var = tk.BooleanVar(value=False)
+all_subtitles_checkbox = tk.Checkbutton(root, text="下载全部字幕", variable=all_subtitles_checkbox_var)
+all_subtitles_checkbox.grid(row=1, column=2, sticky="w")
 
 
 # 第三行 创建视频设置
 video_label = tk.Label(root, text="视频设置")
 video_label.grid(row=2, column=0, sticky="e")
 
-video_setting_frame = tk.Frame(root)#视频设置框架头
+video_setting_frame = tk.Frame(root) # 视频设置框架头
 for i in range(4):
     video_setting_frame.columnconfigure(i, weight=1)
 
@@ -290,6 +322,7 @@ link_label.grid(row=3, column=0, sticky="e")
 
 link_entry = tk.Entry(root, width=50)
 link_entry.grid(row=3, column=1, columnspan=1, padx=10, pady=5, sticky="we")
+link_entry.insert(tk.END, "https://youtu.be/rnTDuup2M4A")
 
 link_entry.grid_rowconfigure(0, weight=1)
 link_entry.grid_columnconfigure(0, weight=1)
