@@ -65,9 +65,10 @@ def download_video():
             'preferredcodec': audio_format,
             'preferredquality': audio_quality
         })
-
-    #for key, value in ytdl_opts.items():
-    #    print(f'{key}: {value}')
+    
+    # 供调试使用
+    for key, value in ytdl_opts.items():
+        print(f'{key}: {value}')
 
     try:
         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
@@ -322,7 +323,6 @@ link_label.grid(row=3, column=0, sticky="e")
 
 link_entry = tk.Entry(root, width=50)
 link_entry.grid(row=3, column=1, columnspan=1, padx=10, pady=5, sticky="we")
-link_entry.insert(tk.END, "https://youtu.be/rnTDuup2M4A")
 
 link_entry.grid_rowconfigure(0, weight=1)
 link_entry.grid_columnconfigure(0, weight=1)
