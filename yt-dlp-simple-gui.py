@@ -27,6 +27,7 @@ def download_video():
     recode_video = recode_video_var.get()
     recode_video_format = selected_recode_video.get()
     download_thumbnail = download_thumbnail_var.get()
+    import_cookies_from_browser = import_cookies_from_browser_var.get()
 
     # 所有下载参数
     ytdl_opts = {
@@ -41,7 +42,7 @@ def download_video():
     ytdl_opts.update(subtitle_command())
 
     # 如果是bilibili的链接
-    if is_bilibili_url(video_link):
+    if is_bilibili_url(video_link) or import_cookies_from_browser:
         ytdl_opts["cookiesfrombrowser"] = (browser_to_import_cookie, None, None, None) # 从浏览器导入cookie
 
     if download_thumbnail:
@@ -292,7 +293,7 @@ browser_label.grid(row=2, column=0, sticky="e")
 selected_browser = tk.StringVar()
 selected_browser.set("chrome")
 browser_list = ("brave", "chrome", "chromium", "edge", "firefox", "opera", "safari", "vivaldi")
-browser_menu = ttk.Combobox(video_setting_frame, values=browser_list, textvariable=selected_browser, width=10)
+browser_menu = ttk.Combobox(video_setting_frame, state="readonly", values=browser_list, textvariable=selected_browser, width=10)
 browser_menu.grid(row=2, column=1, columnspan=1, padx=10, pady=5, sticky="we")
 
 # 是否视频转码？
@@ -308,10 +309,18 @@ recode_video_menu.grid(row=2, column=3, columnspan=1, padx=10, pady=5, sticky="w
 
 video_setting_frame.grid(row=2, column=1, sticky="we") # 视频设置框架尾
 
+video_setting_sidebar_frame = tk.Frame(root)
 # 是否仅下载音频？
 only_download_audio_var = tk.BooleanVar(value=False)
-only_download_audio_checkbox = tk.Checkbutton(root, text="仅下载音频", variable=only_download_audio_var)
-only_download_audio_checkbox.grid(row=2, column=2, sticky="w")
+only_download_audio_checkbox = tk.Checkbutton(video_setting_sidebar_frame, text="仅下载音频", variable=only_download_audio_var)
+only_download_audio_checkbox.grid(row=1, column=0, sticky="w")
+
+# 是否从浏览器导入cookie？
+import_cookies_from_browser_var = tk.BooleanVar(value=False)
+import_cookies_from_browser_checkbox = tk.Checkbutton(video_setting_sidebar_frame, text="导入Cookies", variable=import_cookies_from_browser_var)
+import_cookies_from_browser_checkbox.grid(row=2, column=0, sticky="w")
+
+video_setting_sidebar_frame.grid(row=2, column=2, sticky="ew")
 
 
 # 第四行 创建视频链接输入框

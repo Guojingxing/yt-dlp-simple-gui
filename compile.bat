@@ -1,0 +1,1 @@
+pyinstaller --add-data "yt-dlp-simple-gui.py;." --add-data "requirements.txt;." yt-dlp-simple-gui.py
