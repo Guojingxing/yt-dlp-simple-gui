@@ -126,9 +126,6 @@ def is_bilibili_url(video_link):
     match = re.search(pattern, video_link)
     return match is not None
 
-# 更新标签参数
-def update_label(label_var, text):
-    label_var.set(text)
 
 # 创建主窗口
 root = tk.Tk()
@@ -154,7 +151,7 @@ folder_label = tk.Label(root, text="保存文件夹")
 folder_label.grid(row=0, column=0, sticky="e")
 
 folder_entry = tk.Entry(root, width=50)
-folder_entry.insert(tk.END, os.path.abspath("./").replace("\\", "/"))
+folder_entry.insert(tk.END, os.path.abspath("./").replace("\\", "/")+'/videos')
 folder_entry.grid(row=0, column=1, columnspan=1, padx=10, pady=5, sticky="we")
 
 folder_button = tk.Button(root, text="选择文件夹", command=lambda: folder_entry.delete(0, tk.END) or folder_entry.insert(tk.END, filedialog.askdirectory()))
