@@ -1,4 +1,5 @@
-yt-dlp 
+yt-dlp
+ffmpeg
 mutagen
 pycryptodomex
 websockets
