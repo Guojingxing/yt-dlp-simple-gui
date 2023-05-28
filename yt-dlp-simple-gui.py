@@ -28,6 +28,7 @@ def download_video():
     recode_video_format = selected_recode_video.get()
     download_thumbnail = download_thumbnail_var.get()
     import_cookies_from_browser = import_cookies_from_browser_var.get()
+    download_all_playlist = download_all_playlist_var.get()
 
     # 所有下载参数
     ytdl_opts = {
@@ -67,6 +68,10 @@ def download_video():
             'preferredcodec': audio_format,
             'preferredquality': audio_quality
         })
+
+    # 如果下载整个播放列表
+    if download_all_playlist:
+        ytdl_opts['noplaylist'] = False
 
     for key, value in ytdl_opts.items():
         print(f'{key}: {value}')
@@ -313,12 +318,17 @@ video_setting_sidebar_frame = tk.Frame(root)
 # 是否仅下载音频？
 only_download_audio_var = tk.BooleanVar(value=False)
 only_download_audio_checkbox = tk.Checkbutton(video_setting_sidebar_frame, text="仅下载音频", variable=only_download_audio_var)
-only_download_audio_checkbox.grid(row=1, column=0, sticky="w")
+only_download_audio_checkbox.grid(row=0, column=0, sticky="w")
 
 # 是否从浏览器导入cookie？
 import_cookies_from_browser_var = tk.BooleanVar(value=False)
 import_cookies_from_browser_checkbox = tk.Checkbutton(video_setting_sidebar_frame, text="导入Cookies", variable=import_cookies_from_browser_var)
-import_cookies_from_browser_checkbox.grid(row=2, column=0, sticky="w")
+import_cookies_from_browser_checkbox.grid(row=1, column=0, sticky="w")
+
+# 是否下载整个播放列表（该链接同时为视频和播放列表）？
+download_all_playlist_var = tk.BooleanVar(value=False)
+download_all_playlist_checkbox = tk.Checkbutton(video_setting_sidebar_frame, text="下载整个列表", variable=download_all_playlist_var)
+download_all_playlist_checkbox.grid(row=2, column=0, sticky="w")
 
 video_setting_sidebar_frame.grid(row=2, column=2, sticky="ew")
 
