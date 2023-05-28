@@ -5,8 +5,12 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
+from ttkthemes import ThemedStyle
+import webbrowser
 
 """简易视频/字幕下载软件（yt-dlp GUI）"""
+# Author: Guo Jingxing
+# GitHub: https://github.com/Guojingxing/python-tools/tree/main/yt-dlp-simple-gui
 
 # 字幕语言代码
 sub_langs = ('sq', 'aa', 'akk', 'ak', 'ar', 'arc', 'am', 'as', 'az', 'ee', 'ay', 'ga', 'et', 'oc', 'or', 'om', 'ba', 'eu', 'be', 'bm', 'bg', 'nd', 'nso', 'bi', 'is', 'pl', 'bs', 'fa', 'fa-AF', 'fa-IR', 'brx', 'bh', 'br', 'bo', 'tn', 'ts', 'tt', 'da', 'tok', 'de', 'de-AT', 'de-DE', 'de-CH', 'doi', 'ru', 'ru-Latn', 'fo', 'fr', 'fr-BE', 'fr-FR', 'fr-CA', 'fr-CH', 'sa', 'fil', 'fj', 'fi', 'ff', 'km', 'kl', 'ka', 'gu', 'guz', 'gn', 'ie', 'ia', 'kk', 'ht', 'ko', 'ha', 'nl', 'nl-BE', 'nl-NL', 'mxp', 'ki', 'gl', 'ca', 'cs', 'kln', 'kam', 'kn', 'ky', 'cop', 'xh', 'co', 'cr', 'tlh', 'hr', 'qu', 'ks', 'hak', 'hak-TW', 'kok', 'ku', 'lad', 'la', 'lv', 'lo', 'lt', 'ln', 'rn', 'luo', 'lg', 'lb', 'rw', 'luy', 'lu', 'ro', 'mo', 'rm', 'mt', 'mr', 'mg', 'ml', 'ms', 'mk', 'mas', 'mai', 'mni', 'mi', 'mer', 'mn', 'mn-Mong', 'bn', 'lus', 'my', 'nan', 'nan-TW', 'nv', 'nr', 'af', 'st', 'na', 'ne', 'pcm', 'no', 'pap', 'pa', 'pt', 'pt-BR', 'pt-PT', 'ps', 'tw', 'cho', 'chr', 'ja', 'sv', 'sc', 'sm', 'sh', 'sr', 'sr-Latn', 'sr-Cyrl', 'sg', 'sat', 'si', 'sn', 'eo', 'sk', 'sl', 'ss', 'sw', 'gd', 'so', 'tl', 'tg', 'te', 'ta', 'th', 'to', 'ti', 'tr', 'tk', 'tpi', 'wal', 'cy', 'ug', 've', 'vo', 'wo', 'ur', 'uk', 'uz', 'es', 'es-419', 'es-US', 'es-MX', 'es-ES', 'fy', 'scn', 'iw', 'el', 'ho', 'haw', 'sd', 'hu', 'su', 'hy', 'ig', 'ik', 'it', 'yi', 'iu', 'hi', 'hi-Latn', 'id', 'en', 'en-IE', 'en-CA', 'en-US', 'en-IN', 'en-GB', 'yo', 'yue', 'yue-HK', 'vi', 'jv', 'zh', 'zh-Hant', 'zh-Hans', 'zh-TW', 'zh-HK', 'zh-SG', 'zh-CN', 'dz', 'zu', 'ase', 'bgc', 'sdp', 'vro')
@@ -135,22 +139,70 @@ def is_bilibili_url(video_link):
 
 # 创建主窗口
 root = tk.Tk()
-root.title("视频下载器(yt-dlp)")
+root.title("视频下载器(yt-dlp) - V1.1.3")
+
+# 创建主题样式
+style = ThemedStyle(root)
+style.set_theme("arc")
+
+menuBar = tk.Menu(root)
+
+# 建立帮助菜单对象
+menuHelp = tk.Menu(root, tearoff=False)
+menuBar.add_cascade(label='帮助', menu=menuHelp)
+
+# 弹出菜单内建立3个指令列表
+menuHelp.add_command(label='帮助文档', command=lambda: help())
+menuHelp.add_command(label='查看许可证', command=lambda: showLicense())
+menuHelp.add_separator()
+menuHelp.add_command(label='关于', command=lambda: showInfo())
+
+root.config(menu=menuBar)
+
+def help():
+    webbrowser.open_new_tab(r"https://github.com/Guojingxing/python-tools/wiki#%E7%AE%80%E6%98%93%E8%A7%86%E9%A2%91%E5%AD%97%E5%B9%95%E4%B8%8B%E8%BD%BD%E8%BD%AF%E4%BB%B6")
+
+def showLicense():
+    webbrowser.open_new_tab("https://github.com/Guojingxing/python-tools/blob/main/LICENSE")
+
+def showInfo():
+    about_dialog = tk.Toplevel(root)
+    about_dialog.title("关于")
+    about_dialog.geometry(f"350x50+{root.winfo_x() + 50}+{root.winfo_y() + 50}")
+    about_dialog.grab_set()  # 设置为模态窗口
+    about_dialog.resizable(False, False)  # 禁止调整大小和最大化
+    about_dialog.focus_set()  # 将焦点转移到 about_dialog 窗口
+
+    # 设置行和列的权重
+    for i in range(2):
+        about_dialog.rowconfigure(i, weight=1)
+    for i in range(2):
+        about_dialog.columnconfigure(i, weight=1)
+
+    label_1 = tk.Label(about_dialog, text="作者:")
+    label_1.grid(row=0, column=0, sticky="e")
+    label_2 = tk.Label(about_dialog, text="GitHub:")
+    label_2.grid(row=1, column=0, sticky="e")
+    author_label = tk.Label(about_dialog, text="Guo Jingxing")
+    author_label.grid(row=0, column=1, sticky="w")
+    link_label = tk.Label(about_dialog, text="https://github.com/Guojingxing/python-tools",
+                          fg="blue", cursor="hand2")
+    link_label.grid(row=1, column=1, sticky="w")
+
+    def open_link(event):
+        webbrowser.open_new("https://github.com/Guojingxing/python-tools")
+
+    link_label.bind("<Button-1>", open_link) 
 
 # 设置行和列的权重
-root.rowconfigure(0, weight=1)
-root.rowconfigure(1, weight=1)
-root.rowconfigure(2, weight=1)
-root.rowconfigure(3, weight=1)
-root.rowconfigure(4, weight=1)
-root.columnconfigure(0, weight=1)
-root.columnconfigure(1, weight=1)
-root.columnconfigure(2, weight=1)
+for i in range(5):
+    root.rowconfigure(i, weight=1)
+for i in range(3):
+    root.columnconfigure(i, weight=1)
 
-# 设置窗口最小和最大尺寸
-fixed_height = 320
-root.minsize(600, fixed_height)
-root.maxsize(700, fixed_height)
+# 设置窗口尺寸
+root.geometry("600x350")
+root.resizable(width=False, height=False)
 
 # 第一行 创建保存文件夹和浏览器选项
 folder_label = tk.Label(root, text="保存文件夹")
@@ -358,6 +410,7 @@ download_btn_frame.columnconfigure(2, weight=5)
 
 download_button = tk.Button(download_btn_frame, text="开始下载", command=download_video, width=10)
 download_button.grid(row=0, column=1, padx=10, pady=5, sticky="ew")
+root.bind("<Return>", download_video) # 键盘回车键也可开始下载
 
 # 运行主循环
 root.mainloop()

@@ -1,7 +1,9 @@
 yt-dlp
 ffmpeg
-mutagen
-pycryptodomex
 websockets
-certifi 
+pycryptodomex
 brotli
+certifi
+mutagen
+ttkthemes
+pillow
