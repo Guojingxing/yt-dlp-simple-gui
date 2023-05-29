@@ -44,7 +44,7 @@ pip install pipenv
 pipenv install
 pipenv shell
 ```
-以下代码需要手动复制粘贴执行（去掉前面冒号）：
+等到虚拟环境启动后，再执行以下代码：
 ```bat
 pip install yt-dlp
 pip install pyinstaller
