@@ -1,5 +1,6 @@
 # 简易视频/字幕下载软件
-[![latest version](https://img.shields.io/github/v/release/Guojingxing/yt-dlp-simple-gui?label=latest%20release)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/latest)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/Guojingxing/yt-dlp-simple-gui/blob/main/LICENSE)
+[![latest version](https://img.shields.io/github/v/release/Guojingxing/yt-dlp-simple-gui?label=release)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/latest)
 [![stable version](https://img.shields.io/badge/version-1.1.3-blue?label=stable%20version)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.3)
 ![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total)
 
@@ -46,9 +47,7 @@ pipenv shell
 ```
 等到虚拟环境启动后，再执行以下代码：
 ```bat
-pip install yt-dlp
-pip install pyinstaller
-pip install ttkthemes
+pip install yt-dlp pyinstaller ttkthemes pyinstaller-versionfile
 ```
 以下两行代码二选一：
 ```bat
