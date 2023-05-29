@@ -84,8 +84,7 @@ def download_video(event=None):
         print(f'{key}: {value}')
 
     try:
-        root_origin_title = root.title()
-        root.title(root_origin_title + "  下载中……") # 显示下载状态
+        root.title(title + "  下载中……") # 显示下载状态
         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             ytdl.download([video_link])
         
@@ -98,7 +97,7 @@ def download_video(event=None):
     except Exception as e:
         error_message = str(e) 
         messagebox.showerror("失败", error_message)
-    root.title(root_origin_title)
+    root.title(title)
 
 # 字幕参数设置
 def subtitle_command():
@@ -146,7 +145,8 @@ def is_bilibili_url(video_link):
 # 创建主窗口
 root = tk.Tk()
 root.withdraw()  # 隐藏窗口
-root.title("视频下载器(yt-dlp GUI) - V1.1.3 - 2023/5/29")
+title = "视频下载器(yt-dlp GUI) - V1.1.3 - 2023/5/29"
+root.title(title)
 
 # 设置窗口尺寸
 root.geometry("600x350")
