@@ -57,7 +57,7 @@ pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\
 ::生成文件目录（可打包成zip）
 pyinstaller -F --onedir .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
 ```
-然后将`UPX.exe`复制到`pyinstaller.exe`同文件夹下，然后修改pyinstaller产生的`.spec`文件，将`upx=False`改成`upx=True`，然后手动执行以下代码：
+然后将`UPX.exe`复制到`pyinstaller.exe`同文件夹下，然后修改`pyinstaller`产生的`.spec`文件，将`upx=False`改成`upx=True`，然后执行以下代码：
 ```bat
 :: (若已为True, 则跳过此行)
 pyinstaller yt-dlp-simple-gui.spec
