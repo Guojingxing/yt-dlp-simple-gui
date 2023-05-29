@@ -84,6 +84,8 @@ def download_video(event=None):
         print(f'{key}: {value}')
 
     try:
+        root_origin_title = root.title()
+        root.title(root_origin_title + "  下载中……") # 显示下载状态
         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             ytdl.download([video_link])
         
@@ -96,6 +98,7 @@ def download_video(event=None):
     except Exception as e:
         error_message = str(e) 
         messagebox.showerror("失败", error_message)
+    root.title(root_origin_title)
 
 # 字幕参数设置
 def subtitle_command():
@@ -142,6 +145,7 @@ def is_bilibili_url(video_link):
 
 # 创建主窗口
 root = tk.Tk()
+root.withdraw()  # 隐藏窗口
 root.title("视频下载器(yt-dlp GUI) - V1.1.3 - 2023/5/29")
 
 # 设置窗口尺寸
@@ -208,20 +212,21 @@ for i in range(3):
     root.columnconfigure(i, weight=1)
 
 supported_context_widgets = (tk.Entry, ttk.Combobox) # 支持文本的窗口部件
-def cut_text(): # 剪切
-    selected_widget = root.focus_get()
-    selected_widget.clipboard_clear()
-    selected_widget.clipboard_append(selected_widget.selection_get())
-    selected_widget.delete(tk.SEL_FIRST, tk.SEL_LAST)
 
-def copy_text(): # 复制
-    selected_widget = root.focus_get()
-    selected_widget.clipboard_clear()
-    selected_widget.clipboard_append(selected_widget.selection_get())
-
-def paste_text(): # 粘贴
-    selected_widget = root.focus_get()
-    selected_widget.insert(tk.INSERT, selected_widget.clipboard_get())
+def handle_text(operation):
+    try:
+        selected_widget = root.focus_get()
+        if operation == 'cut':
+            selected_widget.clipboard_clear()
+            selected_widget.clipboard_append(selected_widget.selection_get())
+            selected_widget.delete(tk.SEL_FIRST, tk.SEL_LAST)
+        elif operation == 'copy':
+            selected_widget.clipboard_clear()
+            selected_widget.clipboard_append(selected_widget.selection_get())
+        elif operation == 'paste':
+            selected_widget.insert(tk.INSERT, selected_widget.clipboard_get())
+    except:
+        return
 
 def show_context_menu(event):
     selected_widget = event.widget
@@ -230,11 +235,11 @@ def show_context_menu(event):
             return
         context_menu.post(event.x_root, event.y_root) # 弹出菜单
 
-#创建复制、粘贴菜单
+# 创建复制、粘贴菜单
 context_menu = Menu(root, tearoff=0)
-context_menu.add_command(label="剪切", command=cut_text)
-context_menu.add_command(label="复制", command=copy_text)
-context_menu.add_command(label="粘贴", command=paste_text)
+context_menu.add_command(label="剪切", command=lambda:handle_text('cut'))
+context_menu.add_command(label="复制", command=lambda:handle_text('copy'))
+context_menu.add_command(label="粘贴", command=lambda:handle_text('paste'))
 root.bind("<Button-3>", lambda e: show_context_menu(e)) # 绑定右键菜单
 
 # 第一行 创建保存文件夹和浏览器选项
@@ -445,5 +450,6 @@ download_button = tk.Button(download_btn_frame, text="开始下载", command=dow
 download_button.grid(row=0, column=1, padx=10, pady=5, sticky="ew")
 root.bind("<Return>", download_video) # 键盘回车键也可开始下载
 
+root.deiconify()
 # 运行主循环
 root.mainloop()
