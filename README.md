@@ -26,3 +26,32 @@ pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\lo
 - **字幕可指定语言格式**：可下载指定语言和格式的字幕文件（若有），勾选“字幕翻译”即可翻译为想要的语言
 - **下载B站高清视频**：若要下载B站高清视频，需要先在浏览器中登录，然后选择已登录的相应浏览器即可
 - **支持导入Cookie**：对于部分开通会员或者登录才能看的视频，勾选导入Cookie即可下载（[V1.1.2版本](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.2)及以后）
+
+## 自编译exe文件
+执行以下代码：
+```bat
+pip install pipenv
+pipenv install
+pipenv shell
+```
+以下代码需要手动复制粘贴执行（去掉前面冒号）：
+```bat
+pip install yt-dlp
+pip install pyinstaller
+pip install ttkthemes
+```
+以下两行代码二选一：
+```bat
+:: 生成单个可执行文件exe
+pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
+::生成文件目录（可打包成zip）
+pyinstaller -F --onedir .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
+```
+然后将`UPX.exe`复制到`pyinstaller.exe`同文件夹下，然后修改pyinstaller产生的`.spec`文件，将`upx=False`改成`upx=True`，然后手动执行以下代码：
+```bat
+:: (若已为True, 则跳过此行)
+pyinstaller yt-dlp-simple-gui.spec
+
+pipenv --rm
+exit
+```
