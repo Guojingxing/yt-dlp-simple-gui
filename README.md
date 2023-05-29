@@ -31,11 +31,11 @@ pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\lo
 ### 不压缩
 生成单个可执行文件exe:
 ```bat
-pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
+pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --version-file=versioninfo.txt --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
 ```
 生成文件目录（可打包成zip）:
 ```bat
-pyinstaller -F --onedir .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
+pyinstaller -F --onedir .\yt-dlp-simple-gui.py -i download_icon.ico --version-file=versioninfo.txt --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
 ```
 ### 使用虚拟环境和UPX压缩
 执行以下代码：
@@ -53,9 +53,9 @@ pip install ttkthemes
 以下两行代码二选一：
 ```bat
 :: 生成单个可执行文件exe
-pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
+pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --version-file=versioninfo.txt --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
 ::生成文件目录（可打包成zip）
-pyinstaller -F --onedir .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
+pyinstaller -F --onedir .\yt-dlp-simple-gui.py -i download_icon.ico --version-file=versioninfo.txt --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
 ```
 然后将`UPX.exe`复制到`pyinstaller.exe`同文件夹下，然后修改`pyinstaller`产生的`.spec`文件，将`upx=False`改成`upx=True`，然后执行以下代码：
 ```bat
