@@ -33,7 +33,7 @@ pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\lo
 生成单个可执行文件exe：
 ```bat
 pip install yt-dlp pyinstaller ttkthemes pyinstaller-versionfile
-create-version-file metadata.yml --outfile file_version_info.txt
+create-version-file metadata.yml --outfile versioninfo.txt
 pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --version-file=versioninfo.txt --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
 ```
 生成文件目录（可打包成zip）：
@@ -50,7 +50,7 @@ pipenv shell
 等到虚拟环境启动后，再执行以下代码：
 ```bat
 pip install yt-dlp pyinstaller ttkthemes pyinstaller-versionfile
-create-version-file metadata.yml --outfile file_version_info.txt
+create-version-file metadata.yml --outfile versioninfo.txt
 ```
 以下两行代码二选一：
 ```bat
