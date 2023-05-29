@@ -14,7 +14,7 @@ pip install yt-dlp ffmpeg
 ```bat
 python .\yt-dlp-simple-gui.py
 ```
-或者执行以下代码将其封装成`exe`文件使用（[稳定发行版](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.3)），封装后的`exe`文件在`dist`目录下：
+或者执行以下代码将其封装成`exe`文件使用（需要`pyinstaller`），封装后的`exe`文件在`dist`目录下：
 ```bat
 pip install pyinstaller
 pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
