@@ -24,6 +24,7 @@ pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\lo
 - **默认当前文件夹**：下载文件夹选填，默认下载至当前`yt-dlp-simple-gui.exe`文件所在目录的`videos`下
 - **下载指定画质视频**：可指定任意画质的视频（最高可支持YouTube 8K）以及音频，支持下载播放列表和缩略图
 - **支持大多数视频网站**：支持**哔哩哔哩、YouTube、优酷、抖音**等几乎所有视频网站，详见[支持的网站](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
+- **支持YouTube关键词搜索**：在视频链接处输入搜索关键词，可下载YouTube中最匹配的视频
 - **字幕可指定语言格式**：可下载指定语言和格式的字幕文件（若有），勾选“字幕翻译”即可翻译为想要的语言
 - **下载B站高清视频**：若要下载B站高清视频，需要先在浏览器中登录，然后选择已登录的相应浏览器即可
 - **支持导入Cookie**：对于部分开通会员或者登录才能看的视频，勾选导入Cookie即可下载（[V1.1.2版本](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.2)及以后）
