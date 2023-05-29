@@ -1,4 +1,5 @@
 # 简易视频/字幕下载软件
+[![latest version](https://img.shields.io/github/v/release/Guojingxing/yt-dlp-simple-gui)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.3)
 [![stable version](https://img.shields.io/badge/version-1.1.3-blue?label=stable%20version)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.3)
 ![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total)
 
