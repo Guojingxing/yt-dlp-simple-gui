@@ -7,7 +7,7 @@
 该脚本为[`yt-dlp`](https://github.com/yt-dlp/yt-dlp)命令的简易可视化界面。
 
 ## 系统要求
-请确保系统安装了以下安装包：`yt-dlp`、`ffmpeg`（需要从[ffmpeg官网](https://www.ffmpeg.org/download.html#get-sources)下载）。请执行以下命令安装：
+请确保系统安装了以下安装包：`yt-dlp`、`ffmpeg`（需要从[ffmpeg官网](https://www.ffmpeg.org/download.html#get-sources)下载，并添加环境变量）。请执行以下命令安装：
 ```bat
 pip install yt-dlp ffmpeg
 ```
