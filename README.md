@@ -28,6 +28,16 @@ pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\lo
 - **支持导入Cookie**：对于部分开通会员或者登录才能看的视频，勾选导入Cookie即可下载（[V1.1.2版本](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.2)及以后）
 
 ## 自编译exe文件
+### 不压缩exe
+生成单个可执行文件exe:
+```bat
+pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
+```
+生成文件目录（可打包成zip）:
+```bat
+pyinstaller -F --onedir .\yt-dlp-simple-gui.py -i download_icon.ico --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
+```
+### 压缩exe
 执行以下代码：
 ```bat
 pip install pipenv
