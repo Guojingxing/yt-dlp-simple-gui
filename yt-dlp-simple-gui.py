@@ -225,9 +225,10 @@ def paste_text(): # 粘贴
 
 def show_context_menu(event):
     selected_widget = event.widget
-    if isinstance(selected_widget, supported_context_widgets) and selected_widget.cget("state") != "readonly":
-        context_menu.post(event.x_root, event.y_root)
-
+    if isinstance(selected_widget, supported_context_widgets):
+        if 'state' in selected_widget.keys() and 'readonly' == str(selected_widget.cget("state")):
+            return
+        context_menu.post(event.x_root, event.y_root) # 弹出菜单
 
 #创建复制、粘贴菜单
 context_menu = Menu(root, tearoff=0)
