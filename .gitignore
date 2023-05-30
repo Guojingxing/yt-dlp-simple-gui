@@ -1,2 +1,8 @@
 videos/
+build/
+dist/
+
 versioninfo.txt
+Pipfile
+Pipfile.lock
+yt-dlp-simple-gui.spec
