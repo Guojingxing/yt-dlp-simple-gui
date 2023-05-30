@@ -6,8 +6,11 @@
 
 该脚本为[`yt-dlp`](https://github.com/yt-dlp/yt-dlp)命令的简易可视化界面。无需安装，打开软件粘贴视频链接，点击“开始下载”或按`Enter`键即可下载视频。
 
-### 软件截图
+<details>
+<summary><h3>软件截图</h3></summary>
+
 ![Screenshot](./assets/mainwindow.jpg)
+</details>
 
 ## 系统要求
 系统要求 | 说明
