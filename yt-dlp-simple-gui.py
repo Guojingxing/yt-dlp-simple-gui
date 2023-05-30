@@ -19,7 +19,7 @@ from ttkthemes import ThemedStyle
 # 字幕语言代码
 sub_langs = ('sq', 'aa', 'akk', 'ak', 'ar', 'arc', 'am', 'as', 'az', 'ee', 'ay', 'ga', 'et', 'oc', 'or', 'om', 'ba', 'eu', 'be', 'bm', 'bg', 'nd', 'nso', 'bi', 'is', 'pl', 'bs', 'fa', 'fa-AF', 'fa-IR', 'brx', 'bh', 'br', 'bo', 'tn', 'ts', 'tt', 'da', 'tok', 'de', 'de-AT', 'de-DE', 'de-CH', 'doi', 'ru', 'ru-Latn', 'fo', 'fr', 'fr-BE', 'fr-FR', 'fr-CA', 'fr-CH', 'sa', 'fil', 'fj', 'fi', 'ff', 'km', 'kl', 'ka', 'gu', 'guz', 'gn', 'ie', 'ia', 'kk', 'ht', 'ko', 'ha', 'nl', 'nl-BE', 'nl-NL', 'mxp', 'ki', 'gl', 'ca', 'cs', 'kln', 'kam', 'kn', 'ky', 'cop', 'xh', 'co', 'cr', 'tlh', 'hr', 'qu', 'ks', 'hak', 'hak-TW', 'kok', 'ku', 'lad', 'la', 'lv', 'lo', 'lt', 'ln', 'rn', 'luo', 'lg', 'lb', 'rw', 'luy', 'lu', 'ro', 'mo', 'rm', 'mt', 'mr', 'mg', 'ml', 'ms', 'mk', 'mas', 'mai', 'mni', 'mi', 'mer', 'mn', 'mn-Mong', 'bn', 'lus', 'my', 'nan', 'nan-TW', 'nv', 'nr', 'af', 'st', 'na', 'ne', 'pcm', 'no', 'pap', 'pa', 'pt', 'pt-BR', 'pt-PT', 'ps', 'tw', 'cho', 'chr', 'ja', 'sv', 'sc', 'sm', 'sh', 'sr', 'sr-Latn', 'sr-Cyrl', 'sg', 'sat', 'si', 'sn', 'eo', 'sk', 'sl', 'ss', 'sw', 'gd', 'so', 'tl', 'tg', 'te', 'ta', 'th', 'to', 'ti', 'tr', 'tk', 'tpi', 'wal', 'cy', 'ug', 've', 'vo', 'wo', 'ur', 'uk', 'uz', 'es', 'es-419', 'es-US', 'es-MX', 'es-ES', 'fy', 'scn', 'iw', 'el', 'ho', 'haw', 'sd', 'hu', 'su', 'hy', 'ig', 'ik', 'it', 'yi', 'iu', 'hi', 'hi-Latn', 'id', 'en', 'en-IE', 'en-CA', 'en-US', 'en-IN', 'en-GB', 'yo', 'yue', 'yue-HK', 'vi', 'jv', 'zh', 'zh-Hant', 'zh-Hans', 'zh-TW', 'zh-HK', 'zh-SG', 'zh-CN', 'dz', 'zu', 'ase', 'bgc', 'sdp', 'vro')
 trans_dest_langs = ('af', 'ak', 'sq', 'am', 'ar', 'hy', 'as', 'ay', 'az', 'bn', 'eu', 'be', 'bho', 'bs', 'bg', 'my', 'ca', 'ceb', 'zh-Hans', 'zh-Hant', 'co', 'hr', 'cs', 'da', 'dv', 'nl', 'en', 'eo', 'et', 'ee', 'fil', 'fi', 'fr', 'gl', 'lg', 'ka', 'de', 'el', 'gn', 'gu', 'ht', 'ha', 'haw', 'iw', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jv', 'kn', 'kk', 'km', 'rw', 'ko', 'kri', 'ku', 'ky', 'lo', 'la', 'lv', 'ln', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'ne', 'nso', 'no', 'ny', 'or', 'om', 'ps', 'fa', 'pl', 'pt', 'pa', 'qu', 'ro', 'ru', 'sm', 'sa', 'gd', 'sr', 'sn', 'sd', 'si', 'sk', 'sl', 'so', 'st', 'es', 'su', 'sw', 'sv', 'tg', 'ta', 'tt', 'te', 'th', 'ti', 'ts', 'tr', 'tk', 'uk', 'ur', 'ug', 'uz', 'vi', 'cy', 'fy', 'xh', 'yi', 'yo', 'zu')
-version = "V1.1.3"
+version = "V1.1.4"
 
 def download_video(event=None):
     video_link = link_entry.get()
@@ -85,8 +85,11 @@ def download_video(event=None):
     for key, value in ytdl_opts.items():
         print(f'{key}: {value}')
 
+    def errmsg_format(e):
+        return str(e).replace('\x1b[0;31mERROR:\x1b[0m', '')
     try:
         root.title(title + "  下载中……") # 显示下载状态
+
         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             ytdl.download([video_link])
         
@@ -96,9 +99,29 @@ def download_video(event=None):
             if not os.path.exists(abs_folder):
                 os.makedirs(abs_folder)
             os.startfile(abs_folder)
-    except Exception as e:
-        error_message = str(e) 
-        messagebox.showerror("失败", error_message)
+
+    except yt_dlp.utils.ContentTooShortError as e: 
+        messagebox.showerror("失败", f'内容太短错误: {errmsg_format(e)}')
+    except yt_dlp.utils.DownloadError as e:
+        messagebox.showerror("失败", f'下载错误: {errmsg_format(e)}')
+    except yt_dlp.utils.EntryNotInPlaylist as e: 
+        messagebox.showerror("失败", f'播放列表中无此条目错误: {errmsg_format(e)}')
+    except yt_dlp.utils.ExistingVideoReached as e: 
+        messagebox.showerror("失败", f'已达到现有视频数目上限错误: {errmsg_format(e)}')
+    except yt_dlp.utils.GeoRestrictedError as e: 
+        messagebox.showerror("失败", f'地理位置受限错误: {errmsg_format(e)}')
+    except yt_dlp.utils.ExtractorError as e: 
+        messagebox.showerror("失败", f'提取器错误: {errmsg_format(e)}')
+    except yt_dlp.utils.MaxDownloadsReached: 
+        messagebox.showerror("失败", "已达最大下载数")
+    except yt_dlp.utils.PostProcessingError as e: 
+        messagebox.showerror("失败", f'后处理错误: {errmsg_format(e)}')
+    except yt_dlp.utils.SameFileError as e: 
+        messagebox.showerror("失败", f'相同文件错误: {errmsg_format(e)}')
+    except yt_dlp.utils.UnavailableVideoError as e: 
+        messagebox.showerror("失败", f'视频不可用: {errmsg_format(e)}')
+    except Exception as e: 
+        messagebox.showerror("失败", errmsg_format(e))
     root.title(title)
 
 # 字幕参数设置
@@ -124,10 +147,16 @@ def subtitle_command():
         }]
     }
 
+    def concatenate_strings(subtitle_trans_dest_lang, subtitle_langs):
+        result = subtitle_trans_dest_lang if subtitle_trans_dest_lang != '' else subtitle_langs
+        if subtitle_trans_dest_lang != '' and subtitle_langs != '':
+            result += '-' + subtitle_langs
+        return result
+
     if download_all_subs:
         sub_options['subtitleslangs'].append('all')
     else:
-        sub_options['subtitleslangs'].append(f"{subtitle_trans_dest_lang}-{subtitle_langs}" if needs_translation else subtitle_langs)
+        sub_options['subtitleslangs'].append(concatenate_strings(subtitle_trans_dest_lang,subtitle_langs))
 
     if embed_sub:
         sub_options['postprocessors'].append({
@@ -433,6 +462,7 @@ link_label.grid(row=3, column=0, sticky="e")
 
 link_entry = tk.Entry(root, width=50)
 link_entry.grid(row=3, column=1, columnspan=1, padx=10, pady=5, sticky="we")
+root.after(0, lambda: link_entry.focus_set()) # 设置窗口打开时光标位于 entry 中
 
 link_entry.grid_rowconfigure(0, weight=1)
 link_entry.grid_columnconfigure(0, weight=1)
