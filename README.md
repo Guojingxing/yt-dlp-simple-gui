@@ -13,8 +13,6 @@
 系统要求 | 说明
 -|-
 操作系统 | Windows 7及以上
-Python版本 | 3.10.4+
-Python模块 | yt-dlp<br>ttkthemes
 其他软件 | **ffmpeg（重要，必须安装）**
 
 ### ffmpeg安装、配置环境变量
@@ -28,22 +26,6 @@ Python模块 | yt-dlp<br>ttkthemes
 4. 添加ffmpeg的安装目录路径（例如：“C:\path\to\ffmpeg”）。
 
 5. 确认更改并关闭窗口。重启计算机或打开新的命令提示符以使环境变量生效。
-
-
-### python模块安装
-请确保电脑安装了以下python模块：`yt-dlp`、`ttkthemes`。执行以下命令安装：
-```bat
-pip install yt-dlp ttkthemes
-```
-在项目目录下，执行以下命令运行：
-```bat
-python .\yt-dlp-simple-gui.py
-```
-或者执行以下代码将其封装成`exe`文件使用（需要`pyinstaller`），封装后的`exe`文件在`dist`目录下：
-```bat
-pip install pyinstaller
-pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
-```
 
 ## 主要功能
 - **视频下载**：可指定任意画质的视频（最高可支持YouTube 8K）以及音频，支持下载播放列表和缩略图
@@ -59,6 +41,20 @@ pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\lo
 - **下载弹幕**：若要下载B站等弹幕网站的弹幕文件，勾选“下载全部字幕”即可
 - **字幕翻译和自动生成字幕**：除YouTube外，并非所有网站都支持字幕翻译；若要下载自动生成字幕，视频首先得有自动字幕，然后在语言代码后添加`orig`，如：`en-orig`（英语自动生成字幕）
 ## 自编译exe文件
+### python模块安装
+请确保电脑安装了以下python模块：`yt-dlp`、`ttkthemes`。执行以下命令安装：
+```bat
+pip install yt-dlp ttkthemes
+```
+在项目目录下，执行以下命令运行：
+```bat
+python .\yt-dlp-simple-gui.py
+```
+或者执行以下代码将其封装成`exe`文件使用（需要`pyinstaller`），封装后的`exe`文件在`dist`目录下：
+```bat
+pip install pyinstaller
+pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
+```
 ### 不压缩
 在项目目录下，执行以下命令可将结果打包成单个可执行文件`yt-dlp-simple-gui.exe`（包含所有依赖）：
 ```bat
