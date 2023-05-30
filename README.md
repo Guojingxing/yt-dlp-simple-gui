@@ -2,7 +2,7 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/Guojingxing/yt-dlp-simple-gui/blob/main/LICENSE)
 [![latest version](https://img.shields.io/github/v/release/Guojingxing/yt-dlp-simple-gui?label=release)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/latest)
 [![stable version](https://img.shields.io/badge/version-1.1.3-blue?label=stable%20version)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.3)
-![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total)
+[![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total)](#)
 
 该脚本为[`yt-dlp`](https://github.com/yt-dlp/yt-dlp)命令的简易可视化界面。无需安装，打开软件粘贴视频链接，点击“开始下载”或按`Enter`键即可下载视频。
 
