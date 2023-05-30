@@ -4,12 +4,15 @@
 [![stable version](https://img.shields.io/badge/version-1.1.3-blue?label=stable%20version)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.3)
 ![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total)
 
-该脚本为[`yt-dlp`](https://github.com/yt-dlp/yt-dlp)命令的简易可视化界面。
+该脚本为[`yt-dlp`](https://github.com/yt-dlp/yt-dlp)命令的简易可视化界面。无需安装，打开软件，粘贴视频链接，点击开始下载或按`Enter`键即可下载视频。
+
+### 屏幕截图
+![Screenshot](./assets/mainwindow.jpg)
 
 ## 系统要求
-请确保系统安装了以下安装包：`yt-dlp`、`ttkthemes`、`ffmpeg`（需要从[ffmpeg官网](https://www.ffmpeg.org/download.html#get-sources)下载，并添加环境变量）。请执行以下命令安装：
+请确保电脑安装了以下安装包：`yt-dlp`、`ttkthemes`、`ffmpeg`（需要从[ffmpeg官网](https://www.ffmpeg.org/download.html#get-sources)下载，并添加环境变量）。请执行以下命令安装：
 ```bat
-pip install yt-dlp ttkthemes
+pip install yt-dlp ttkthemes ffmpeg
 ```
 在项目目录下，执行以下命令运行：
 ```bat

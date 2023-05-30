@@ -1,0 +1,40 @@
+name: BUG反馈 
+description: 详细填写这个表格让我们更好的修复BUG
+title: "[BUG]: " 
+labels: ["bug"]
+assignees:
+  - octocat
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您花时间填写此bug提交报告！
+  - type: input 
+    id: contact
+    attributes:
+      label: 联系方式  
+      description: 如果我们需要更多信息，我们如何联系您？
+      placeholder: 例如：email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 发生了什么？
+      description: 还告诉我们，您期望会发生什么？
+      placeholder: 告诉我们软件使用过程中遇到的错误信息
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: 版本  
+      description: 您正在运行软件的哪个版本？
+      options:
+        - 1.0.0
+        - 1.1.0
+        - 1.1.1
+        - 1.1.2
+        - 1.1.3(默认)
+    validations:
+      required: true
