@@ -49,28 +49,25 @@
 ```bat
 pip install yt-dlp ttkthemes
 ```
-在项目目录下，执行以下命令运行：
+在项目目录下，执行以下命令即可运行：
 ```bat
 python .\yt-dlp-simple-gui.py
 ```
-或者执行以下代码将其封装成`exe`文件使用（需要`pyinstaller`），封装后的`exe`文件在`dist`目录下：
-```bat
-pip install pyinstaller
-pyinstaller -F --onefile .\yt-dlp-simple-gui.py --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
-```
-### 不压缩
+### 不压缩打包
 在项目目录下，执行以下命令可将结果打包成单个可执行文件`yt-dlp-simple-gui.exe`（包含所有依赖）：
 ```bat
-pip install yt-dlp pyinstaller ttkthemes pyinstaller-versionfile
+pip install yt-dlp ttkthemes pyinstaller pyinstaller-versionfile
 create-version-file metadata.yml --outfile versioninfo.txt
 pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --version-file=versioninfo.txt --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
 ```
 若要提高exe启动和加载速度，可打包成文件目录：
 ```bat
+pip install yt-dlp ttkthemes pyinstaller pyinstaller-versionfile
+create-version-file metadata.yml --outfile versioninfo.txt
 pyinstaller -F --onedir .\yt-dlp-simple-gui.py -i download_icon.ico --version-file=versioninfo.txt --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
 ```
 此时所有结果都被打包到一个文件夹中，该文件夹包括一个可执行文件`yt-dlp-simple-gui.exe`和可执行文件执行时需要的依赖文件（默认）。
-### 使用虚拟环境和UPX压缩
+### 使用虚拟环境和UPX压缩打包
 执行以下代码：
 ```bat
 pip install pipenv
