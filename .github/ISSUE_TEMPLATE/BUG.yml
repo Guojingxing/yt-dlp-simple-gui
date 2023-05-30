@@ -8,15 +8,15 @@ body:
     attributes:
       label: 联系方式
       description: 如果您愿意，您可以提供您的邮件地址，以便我们能够联系您。
-      placeholder: 例如，example@example.com
+      placeholder: 例如：example@example.com
     validations:
       required: false
   - type: textarea
     id: description
     attributes:
       label: BUG描述
-      description: 请简要描述您遇到的问题。
-      placeholder: 例如，当我运行这个命令时，软件崩溃了。
+      description: 请简要描述您遇到的问题（可附上屏幕截图）。
+      placeholder: 例如：当我运行这个命令时，软件崩溃了。
     validations:
       required: true
   - type: dropdown
@@ -30,6 +30,7 @@ body:
         - 1.1.1
         - 1.1.2
         - 1.1.3(默认)
+      default: 1.1.3(默认)
     validations:
       required: true
   - type: textarea
@@ -38,7 +39,7 @@ body:
       label: 复现步骤
       description: 请详细描述您是如何遇到这个问题的，以便我们能够复现它。
       placeholder: |
-        例如，
+        例如：
         1. 打开软件
         2. 点击某个按钮
         3. 出现错误信息
@@ -50,7 +51,7 @@ body:
       label: 日志信息
       description: 如果您有任何相关的日志信息，请在这里粘贴它们，或者上传到某个网盘并提供链接。
       placeholder: |
-        例如，
+        例如：
         Traceback (most recent call last):
           File "main.py", line 10, in <module>
             do_something()
@@ -64,6 +65,6 @@ body:
     attributes:
       label: 预期行为
       description: 您期望软件的行为是什么？
-      placeholder: 例如，我期望软件能够正常运行，不会崩溃。
+      placeholder: 例如：我期望软件能够正常运行，不会崩溃。
     validations:
       required: false
