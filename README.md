@@ -43,7 +43,7 @@
 - **下载弹幕**：若要下载B站等弹幕网站的弹幕文件，勾选“下载全部字幕”即可
 - **字幕翻译和自动生成字幕**：
   - 除YouTube外，并非所有网站都支持字幕翻译；
-  - 若要下载自动生成字幕，视频首先得有自动字幕，然后勾选“翻译”；并将右侧任意一行改为`LANG_CODE-orig`（LANG_CODE为[语言代码](https://github.com/yt-dlp/yt-dlp/blob/c26f9b991a0681fd3ea548d535919cec1fbbd430/yt_dlp/extractor/youtube.py#L381-L390)），另一行改成空白。如：将`en`改为`en-orig`（英语自动生成字幕）
+  - 若要下载自动生成字幕，视频首先得有自动字幕，然后勾选“翻译”，并将右侧任意一行改为`LANG_CODE-orig`（LANG_CODE为[语言代码](https://github.com/yt-dlp/yt-dlp/blob/c26f9b991a0681fd3ea548d535919cec1fbbd430/yt_dlp/extractor/youtube.py#L381-L390)），另一行改成空白。如：将`en`改为`en-orig`（英语自动生成字幕）
 ## 自编译exe文件
 ### python模块安装
 请确保电脑安装了以下python模块：`yt-dlp`、`ttkthemes`。执行以下命令安装：
