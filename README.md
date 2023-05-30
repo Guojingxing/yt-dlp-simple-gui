@@ -1,7 +1,6 @@
 # 简易视频/字幕下载软件
-[![MIT License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/Guojingxing/yt-dlp-simple-gui/blob/main/LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-red)](https://github.com/Guojingxing/yt-dlp-simple-gui/blob/main/LICENSE)
 [![latest version](https://img.shields.io/github/v/release/Guojingxing/yt-dlp-simple-gui?label=release)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/latest)
-[![stable version](https://img.shields.io/badge/version-1.1.4-blue?label=stable%20version)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.4)
 [![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total)](#)
 
 该脚本为[`yt-dlp`](https://github.com/yt-dlp/yt-dlp)命令的简易可视化界面。无需安装，打开软件粘贴视频链接，点击“开始下载”或按`Enter`键即可下载视频。
@@ -42,7 +41,9 @@
 - **下载短视频**：由于视频画质为视频最大高度，那么下载抖音、YouTube Shorts或其他短视频时，视频画质应选择大于1920的数字
 - **默认当前文件夹**：下载文件夹选填，默认下载至当前软件所在目录的`videos`下
 - **下载弹幕**：若要下载B站等弹幕网站的弹幕文件，勾选“下载全部字幕”即可
-- **字幕翻译和自动生成字幕**：除YouTube外，并非所有网站都支持字幕翻译；若要下载自动生成字幕，视频首先得有自动字幕，然后在语言代码后添加`orig`，如：`en-orig`（英语自动生成字幕）
+- **字幕翻译和自动生成字幕**：
+  - 除YouTube外，并非所有网站都支持字幕翻译；
+  - 若要下载自动生成字幕，视频首先得有自动字幕，然后勾选“翻译”；并将右侧任意一行改为`LANG_CODE-orig`（LANG_CODE为[语言代码](https://github.com/yt-dlp/yt-dlp/blob/c26f9b991a0681fd3ea548d535919cec1fbbd430/yt_dlp/extractor/youtube.py#L381-L390)），另一行改成空白。如：将`en`改为`en-orig`（英语自动生成字幕）
 ## 自编译exe文件
 ### python模块安装
 请确保电脑安装了以下python模块：`yt-dlp`、`ttkthemes`。执行以下命令安装：
@@ -62,7 +63,6 @@ pyinstaller -F --onefile .\yt-dlp-simple-gui.py -i download_icon.ico --version-f
 ```
 若要提高exe启动和加载速度，可打包成文件目录：
 ```bat
-pip install yt-dlp ttkthemes pyinstaller pyinstaller-versionfile
 create-version-file metadata.yml --outfile versioninfo.txt
 pyinstaller -F --onedir .\yt-dlp-simple-gui.py -i download_icon.ico --version-file=versioninfo.txt --paths C:\users\dell\appdata\local\programs\python\python310\lib\site-packages\yt-dlp,websockets,pycryptodomex,brotli,certifi,mutagen,ttkthemes,pillow --clean
 ```
