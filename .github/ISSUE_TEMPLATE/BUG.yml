@@ -25,12 +25,11 @@ body:
       label: 软件版本
       description: 您正在使用本项目的哪个版本？
       options:
-        - 1.0.0
-        - 1.1.0
-        - 1.1.1
-        - 1.1.2
         - 1.1.3(默认)
-      default: 1.1.3(默认)
+        - 1.1.2
+        - 1.1.1
+        - 1.1.0
+        - 1.0.0
     validations:
       required: true
   - type: textarea
