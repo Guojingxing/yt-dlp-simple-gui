@@ -29,14 +29,15 @@ configs = {}
 # 从文件中加载配置（若有）
 def load_configs():
     file_path = CONFIG_YML
-    print("加载用户配置...")
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
+            print("加载用户配置...")
             all_configs = yaml.safe_load(f)
         if all_configs is not None:
-            print("加载完成")
+            print("配置加载完成")
             return all_configs
     # 处理文件不存在或为空的情况，返回空字典
+    print("创建用户配置")
     return {}
     
 # 仅开启软件时执行
@@ -615,5 +616,6 @@ root.bind("<ButtonRelease>", lambda e:update_configs(e, update_button_widgets))
 #############
 
 root.deiconify()
+print("主界面加载完成")
 # 运行主循环
 root.mainloop()
