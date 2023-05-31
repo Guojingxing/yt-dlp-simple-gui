@@ -539,15 +539,17 @@ def paste_to_link_entry(event):
     if event.widget != root:
         return
     global last_clipboard_text
-    clipboard_text = root.clipboard_get(type='STRING')
-    if clipboard_text != last_clipboard_text:
-        last_clipboard_text = clipboard_text
-        match = re.search(r'https?://\S+', clipboard_text)
-        if match:
-            url = clipboard_text
-            if is_youtube_url(url) or is_bilibili_url(url) or is_video_url(url):
-                link_entry.delete(0, tk.END)
-                link_entry.insert(tk.END, url)
+    try:
+        clipboard_text = root.clipboard_get(type='STRING')
+        if clipboard_text != last_clipboard_text:
+            last_clipboard_text = clipboard_text
+            match = re.search(r'https?://\S+', clipboard_text)
+            if match:
+                url = clipboard_text
+                if is_youtube_url(url) or is_bilibili_url(url) or is_video_url(url):
+                    link_entry.delete(0, tk.END)
+                    link_entry.insert(tk.END, url)
+    except: pass
 root.bind("<FocusIn>", paste_to_link_entry)
 
 link_entry.grid_rowconfigure(0, weight=1)
