@@ -3,7 +3,7 @@ CompanyName: Guo Jingxing
 FileDescription: 简单的视频/字幕下载器  
 InternalName: Simple GUI for yt-dlp
 LegalCopyright: Copyright (c) 2023 Guo Jingxing All rights reserved.  
-OriginalFilename: yt-dlp-gui.exe
+OriginalFilename: yt-dlp-simple-gui.exe
 ProductName: Simple GUI for yt-dlp 
 Translation: 
   - langID: 2052

@@ -5,7 +5,6 @@ import yt_dlp
 import re
 import os
 import webbrowser
-import datetime
 import yaml
 
 import tkinter as tk
@@ -23,6 +22,7 @@ SUB_LANGS = ('sq', 'aa', 'akk', 'ak', 'ar', 'arc', 'am', 'as', 'az', 'ee', 'ay',
 TRANS_DEST_LANGS = ('af', 'ak', 'sq', 'am', 'ar', 'hy', 'as', 'ay', 'az', 'bn', 'eu', 'be', 'bho', 'bs', 'bg', 'my', 'ca', 'ceb', 'zh-Hans', 'zh-Hant', 'co', 'hr', 'cs', 'da', 'dv', 'nl', 'en', 'eo', 'et', 'ee', 'fil', 'fi', 'fr', 'gl', 'lg', 'ka', 'de', 'el', 'gn', 'gu', 'ht', 'ha', 'haw', 'iw', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jv', 'kn', 'kk', 'km', 'rw', 'ko', 'kri', 'ku', 'ky', 'lo', 'la', 'lv', 'ln', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'ne', 'nso', 'no', 'ny', 'or', 'om', 'ps', 'fa', 'pl', 'pt', 'pa', 'qu', 'ro', 'ru', 'sm', 'sa', 'gd', 'sr', 'sn', 'sd', 'si', 'sk', 'sl', 'so', 'st', 'es', 'su', 'sw', 'sv', 'tg', 'ta', 'tt', 'te', 'th', 'ti', 'ts', 'tr', 'tk', 'uk', 'ur', 'ug', 'uz', 'vi', 'cy', 'fy', 'xh', 'yi', 'yo', 'zu')
 
 VERSION = "V1.2.0"
+LAST_EDIT_DATE = '2023/5/31'
 CONFIG_YML = './configs.yml'
 
 configs = {}
@@ -221,8 +221,7 @@ def is_video_url(url):
 root = tk.Tk()
 root.withdraw()  # 隐藏窗口
 
-last_edit_date = datetime.datetime.now().strftime("%Y/%#m/%#d")
-title = " - ".join(["视频下载器(yt-dlp GUI)", VERSION, last_edit_date])
+title = " - ".join(["视频下载器(yt-dlp GUI)", VERSION, LAST_EDIT_DATE])
 root.title(title)
 
 # 设置窗口尺寸
