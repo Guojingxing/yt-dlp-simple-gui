@@ -6,3 +6,4 @@ certifi
 mutagen
 ttkthemes
 pillow
+pyyaml

@@ -1,8 +1,13 @@
 videos/
+
+# 编译相关
 build/
 dist/
-
 versioninfo.txt
 Pipfile
 Pipfile.lock
 yt-dlp-simple-gui.spec
+LICENSE
+
+# 用户配置
+config*.y*ml
