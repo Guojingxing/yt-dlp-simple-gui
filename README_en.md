@@ -25,8 +25,8 @@ Other Software | **ffmpeg (important, must be installed)**
 ## Tutorial
 Download the software, no installation is required. After opening, paste the video link and click "Start Download" or press `Enter` to download the video.
 ### FAQ
-For more common issues and precautions, please refer to [Wiki-en#FAQ](https://github.com/Guojingxing/yt-dlp-simple-gui/wiki#faq).
+For more common issues and precautions, please refer to [Wiki-en#FAQ](https://github.com/Guojingxing/yt-dlp-simple-gui/wiki/Wiki-en#faq).
 ## Self-compiled exe file
-This section describes how to package `yt-dlp-simple-gui.py` into an `exe` file. For specific steps, please refer to [Wiki-en#Self-compiled exe file](https://github.com/Guojingxing/yt-dlp-simple-gui/wiki#self-compiled-exe-file).
+This section describes how to package `yt-dlp-simple-gui.py` into an `exe` file. For specific steps, please refer to [Wiki-en#Self-compiled exe file](https://github.com/Guojingxing/yt-dlp-simple-gui/wiki/Wiki-en#self-compiled-exe-file).
 ## License
 This project is licensed under the [MIT License](LICENSE).
