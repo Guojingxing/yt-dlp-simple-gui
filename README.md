@@ -3,7 +3,7 @@
 [![latest version](https://img.shields.io/github/v/release/Guojingxing/yt-dlp-simple-gui?label=latest%20release)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/latest)
 [![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total)](#)
 
-[English](README_en.md) | **中文（简体）** | [中文（繁体）](https://github.com/Guojingxing/yt-dlp-simple-gui/wiki/Wiki-zh-TW)
+[English](README_en.md) | **中文（简体）** | [中文（繁體）](https://github.com/Guojingxing/yt-dlp-simple-gui/wiki/Wiki-zh-TW)
 
 该脚本为[`yt-dlp`](https://github.com/yt-dlp/yt-dlp)命令的简易可视化界面。无需安装，打开软件粘贴视频链接，点击“开始下载”或按`Enter`键即可下载视频。
 
