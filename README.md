@@ -1,7 +1,8 @@
 # 简易视频/字幕下载软件
 [![MIT License](https://img.shields.io/badge/license-MIT-red)](https://github.com/Guojingxing/yt-dlp-simple-gui/blob/main/LICENSE)
 [![latest version](https://img.shields.io/github/v/release/Guojingxing/yt-dlp-simple-gui?label=latest%20release)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/latest)
-[![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total)](#)
+[![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total?color=brightgreen)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases)
+![framework](https://img.shields.io/badge/framework-Qt-green)
 
 [English](README_en.md) | **中文（简体）** | [中文（繁體）](https://github.com/Guojingxing/yt-dlp-simple-gui/wiki/Wiki-zh-TW)
 

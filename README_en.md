@@ -1,9 +1,10 @@
 # Simple Video/Subtitle Downloader
 [![MIT License](https://img.shields.io/badge/license-MIT-red)](https://github.com/Guojingxing/yt-dlp-simple-gui/blob/main/LICENSE)
 [![latest version](https://img.shields.io/github/v/release/Guojingxing/yt-dlp-simple-gui?label=latest%20release)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/latest)
-[![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total)](#)
+[![GitHub release downloads(latest version)](https://img.shields.io/github/downloads/Guojingxing/yt-dlp-simple-gui/total?color=brightgreen)](https://github.com/Guojingxing/yt-dlp-simple-gui/releases)
+![framework](https://img.shields.io/badge/framework-Qt-green)
 
-**English** | [中文（中国）](README.md)
+**English** | [中文（简体）](README.md) | [中文（繁體）](https://github.com/Guojingxing/yt-dlp-simple-gui/wiki/Wiki-zh-TW)
 
 This script provides a simple graphical interface for the [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) command. No installation is required. Just open the software, paste the video link, and click "Start Download" or press `Enter` to download the video.
 ## System Requirements 
