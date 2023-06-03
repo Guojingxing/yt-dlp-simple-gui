@@ -10,7 +10,7 @@ import yaml
 # 编译 - 导入部分包
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QPushButton, QRadioButton,\
 QComboBox, QFileDialog, QApplication, QCheckBox, QShortcut, QMessageBox, QAction, \
-    QDialog, QLabel, QActionGroup
+    QDialog, QLabel, QActionGroup, QProgressBar
 from PyQt5.QtCore import QThread, pyqtSignal, QUrl, Qt, QTranslator, QLocale, QLibraryInfo
 from PyQt5.QtGui import QIcon, QDesktopServices, QFont, QKeySequence
 from PyQt5 import uic
@@ -35,6 +35,9 @@ class MainWindow(QMainWindow):
         # 设置窗口
         self.setWindowTitle(self.title)
         self.setWindowIcon(self.icon)
+        self.setFixedSize(624, 436)
+        self.setWindowFlag(Qt.WindowMinimizeButtonHint) # 禁用最大化
+        
         self.configs = self.load_configs()
         self.status_bar = self.statusBar()
 
@@ -65,6 +68,25 @@ class MainWindow(QMainWindow):
         self.lang_action_group.addAction(self.findChild(QAction, 'actionTraditionalChinese'))
         self.lang_action_group.addAction(self.findChild(QAction, 'actionEnglish'))
 
+        # 配置底部status bar
+        self.progress_bar = QProgressBar(self)
+        self.progress_bar.setFixedSize(200, 15)
+        self.status_bar.addWidget(self.progress_bar) # 添加进度条
+        self.progress_bar.hide()
+        self.progress_bar.setValue(0)
+
+        self.downloaded_label = QLabel(self.tr("已下载: 0 B"), self)
+        self.status_bar.addPermanentWidget(self.downloaded_label)
+
+        self.total_label = QLabel(self.tr("总大小: 0 B"), self)
+        self.status_bar.addPermanentWidget(self.total_label)
+
+        #self.eta_label = QLabel(self.tr("预估剩余时间: 未知"), self)
+        #self.status_bar.addPermanentWidget(self.eta_label)
+
+        self.speed_label = QLabel(self.tr("速度: 0 B/s"), self)
+        self.status_bar.addPermanentWidget(self.speed_label)
+       
         # 配置文件夹widgets
         self.folder_edit = self.findChild(QLineEdit, "folder_edit")
         path = os.path.join(os.path.abspath("./"), 'videos').replace("\\", "/")
@@ -156,8 +178,7 @@ class MainWindow(QMainWindow):
         self.download_button = self.findChild(QPushButton, "download_button")
         self.download_button.clicked.connect(self.download_video)
         self.shortcut = QShortcut(QKeySequence(Qt.Key_Enter), self)
-        self.shortcut.setEnabled(True)
-        self.shortcut.activated.connect(self.download_video)
+        self.shortcut.activated.connect(self.download_button.click)
 
         self.init_parameters()
 
@@ -252,14 +273,16 @@ class MainWindow(QMainWindow):
                     r'(www\.|v\.|tv\.|video\.)?(' + '|'.join(video_websites) + r')\.(com|cn|clip|tv)'
         match = re.search(pattern, url)
         return match is not None
-    
-    def download_video(self):
-        if not self.shortcut.isEnabled():  # 如果快捷键已被禁用
-            return  # 直接返回，避免重复触发
 
-        # 禁用快捷键
-        self.shortcut.setEnabled(False)
-        
+    def video_domain_keyword(self, url, *domain_keywords):
+        domain_keyword_list = list(domain_keywords)
+        pattern = r'(https?://)?' + \
+                    r'(www\.|v\.|tv\.|video\.)?(' + '|'.join(domain_keyword_list) + r')\.(com|cn|clip|tv)'
+        match = re.search(pattern, url)
+        return match is not None
+    
+    # 下载视频（核心部分）
+    def download_video(self):
         self.video_link = self.link_edit.text()
         if self.video_link == "":
             QMessageBox.information(self, self.tr("提示"), self.tr("请输入视频链接"))
@@ -311,18 +334,59 @@ class MainWindow(QMainWindow):
         for key, value in ytdl_opts.items():
             print(f'{key}: {value}')
 
-        self.status_bar.clearMessage()
         self.download_button.setEnabled(False)  # 禁用窗口上的控件
-        self.status_bar.showMessage(self.tr("下载中...")) # 显示下载状态
+        self.progress_bar.setValue(0) # 初始化进度条
         
         # 创建并启动后台线程，并传递参数
         self.download_thread = DownloadThread(self.video_link, ytdl_opts)
+        self.download_thread.started.connect(self.progress_bar.show)
         self.download_thread.finished.connect(self.handleDownloadFinished)
         self.download_thread.errorOccurred.connect(self.handleDownloadError)
+        self.download_thread.progress_updated.connect(self.update_progress)
         self.download_thread.start()
+
+    def update_progress(self, downloaded_bytes, total_bytes, total_bytes_estimate, elapsed, eta, speed):
+        self.progress_bar.setMaximum(total_bytes)
+        self.progress_bar.setValue(downloaded_bytes)
+
+        self.downloaded_label.setText(self.tr("已下载: ") + self.format_bytes(downloaded_bytes))
+        self.total_label.setText(self.tr("总大小: ")+ self.format_bytes(total_bytes))
+        #self.eta_label.setText(self.tr("预估剩余时间: ") + self.format_speed(eta))
+        self.speed_label.setText(self.tr("速度: ") + self.format_speed(speed))
+    
+    def format_bytes(self, num_bytes):
+        if num_bytes is None:
+            return self.tr("未知")
+        elif num_bytes < 1024:
+            return f"{num_bytes} B"
+        elif num_bytes < 1024**2:
+            return f"{num_bytes / 1024:.2f} KB"
+        elif num_bytes < 1024**3:
+            return f"{num_bytes / (1024**2):.2f} MB"
+        else:
+            return f"{num_bytes / (1024**3):.2f} GB"
+
+    def format_time(self, seconds):
+        if seconds is None:
+            return self.tr("未知")
+        minutes, seconds = divmod(int(seconds), 60)
+        hours, minutes = divmod(minutes, 60)
+        return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+    
+    def format_speed(self, speed):
+        if speed is None:
+            return self.tr("未知")
+        elif speed < 1024:
+            return f"{speed} B/s"
+        elif speed < 1024**2:
+            return f"{speed / 1024:.2f} KB/s"
+        elif speed < 1024**3:
+            return f"{speed / (1024**2):.2f} MB/s"
+        else:
+            return f"{speed / (1024**3):.2f} GB/s"
     
     def handleDownloadError(self, e):
-        self.status_bar.showMessage(self.tr("下载失败"))
+        #self.status_bar.showMessage(self.tr("下载失败"))
 
         def errmsg_format(e):
             return str(e).replace('\x1b[0;31mERROR:\x1b[0m', '')
@@ -353,8 +417,6 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, self.tr("错误: "), errmsg_format(e))
         
         self.download_button.setEnabled(True)  # 启用下载按钮
-        # 启用快捷键
-        self.shortcut.setEnabled(True)
 
     # 字幕参数设置
     def subtitle_settings(self):
@@ -371,12 +433,28 @@ class MainWindow(QMainWindow):
             }]
         }
 
+        # 组合“语言”和“翻译语言”的字符串
         def concatenate_strings(subtitle_trans_dest_lang, subtitle_langs):
+            result = ''
             if subtitle_langs == 'auto':
-                subtitle_langs = ''
+                subtitle_langs = r'^[a-z]{2,3}-orig$' # YouTube的自动字幕以'-orig'结尾
+                sub_options['writeautomaticsub'] = True
+                if self.needs_translation:
+                    subtitle_langs = ''
+
             result = subtitle_trans_dest_lang if subtitle_trans_dest_lang != '' else subtitle_langs
             if subtitle_trans_dest_lang != '' and subtitle_langs != '':
                 result += '-' + subtitle_langs
+
+            if self.is_bilibili_url(self.video_link): # bilibili字幕
+                if subtitle_langs == 'auto':
+                    result = r'^ai-[a-z]{2,3}$'
+                    sub_options['writeautomaticsub'] = True
+                elif 'zh' in subtitle_langs:
+                    result = r'zh.*'
+
+            if not self.needs_translation:
+                result = subtitle_langs
             return result
 
         if self.download_all_subs:
@@ -391,7 +469,10 @@ class MainWindow(QMainWindow):
             })
         
         if self.live_chat_subs:
-            sub_options['subtitleslangs'].append('live_chat')
+            if self.is_bilibili_url(self.video_link) or self.video_domain_keyword(self.video_link, 'acfun', 'niconico'):
+                sub_options['subtitleslangs'].append('danmaku')
+            else:
+                sub_options['subtitleslangs'].append('live_chat')
         else:
             sub_options['subtitleslangs'].append('-live_chat')
             
@@ -428,7 +509,12 @@ class MainWindow(QMainWindow):
             yaml.dump(self.config(), f) 
 
     def handleDownloadFinished(self):
-        self.status_bar.showMessage(self.tr("下载完成"))
+        self.progress_bar.setMaximum(100)
+        self.progress_bar.setValue(100)
+        self.downloaded_label.setText(self.tr("已下载: ") + self.format_bytes(self.download_thread.last_progress['downloaded_bytes']))
+        self.total_label.setText(self.tr("总大小: ") + self.format_bytes(self.download_thread.last_progress['total_bytes']))
+        #self.eta_label.setText(self.tr("预估剩余时间: ") + self.format_time(self.download_thread.last_progress['eta']))
+        self.speed_label.setText(self.tr("速度: ") + self.format_time(self.download_thread.last_progress['speed']))
 
         if QMessageBox.Yes == QMessageBox.question(self, self.tr("成功"), self.tr("下载完成!\n是否要打开文件夹?"), QMessageBox.Yes | QMessageBox.No):
             abs_folder = os.path.abspath(self.save_folder)
@@ -436,10 +522,8 @@ class MainWindow(QMainWindow):
                 os.makedirs(abs_folder)
             os.startfile(abs_folder)
 
-        self.status_bar.clearMessage()
+        #self.progress_bar.hide()
         self.download_button.setEnabled(True)  # 启用下载按钮
-        # 下载完成后，启用快捷键
-        self.shortcut.setEnabled(True)
         
         self.sender().quit()
         self.sender().wait()
@@ -497,11 +581,21 @@ def getFont(lang_code): #根据语言选择字体
 class DownloadThread(QThread):
     finished = pyqtSignal()  # 自定义信号，在任务完成时发出信号
     errorOccurred = pyqtSignal(Exception)
+    progress_updated = pyqtSignal(int, int, int, float, int, float)
 
     def __init__(self, video_link, ytdl_opts):
         super().__init__()
         self.video_link = video_link
         self.ytdl_opts = ytdl_opts
+        self.ytdl_opts['progress_hooks'] = [self.my_progress_hook]
+        self.last_progress = {
+                'downloaded_bytes': 0,
+                'total_bytes': 0,
+                'total_bytes_estimate': 0,
+                'elapsed': 0,
+                'eta': 0,
+                'speed': 0
+            }
 
     def run(self):
         try:
@@ -512,6 +606,41 @@ class DownloadThread(QThread):
             self.errorOccurred.emit(e)
         else:
             self.finished.emit()  # 发出任务完成的信号
+
+    def my_progress_hook(self, d):
+        if d['status'] == 'downloading':
+            total_bytes = d.get('total_bytes')
+            downloaded_bytes = d.get('downloaded_bytes')
+            total_bytes_estimate = d.get('total_bytes_estimate')
+            elapsed = d.get('elapsed')
+            eta = d.get('eta')
+            speed = d.get('speed')
+
+            self.progress_updated.emit(
+                downloaded_bytes,
+                total_bytes,
+                total_bytes_estimate,
+                elapsed,
+                eta,
+                speed
+            )
+            self.last_progress = {
+                'downloaded_bytes': downloaded_bytes,
+                'total_bytes': total_bytes,
+                'total_bytes_estimate': total_bytes_estimate,
+                'elapsed': elapsed,
+                'eta': eta,
+                'speed': speed
+            }
+        elif d['status'] == 'finished':
+            self.progress_updated.emit(
+                self.last_progress['downloaded_bytes'],
+                self.last_progress['total_bytes'],
+                self.last_progress['total_bytes_estimate'],
+                self.last_progress['elapsed'],
+                self.last_progress['eta'],
+                self.last_progress['speed']
+            )
 
 class AboutDialog(QDialog):
     def __init__(self):
