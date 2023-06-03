@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()  # 创建 UI 对象
         self.ui.setupUi(self) 
 
-        self.title = ' - '.join([self.tr("视频下载器(yt-dlp QtGUI)"), VERSION, LAST_EDIT_DATE])
+        self.title = ' - '.join([TITLE, VERSION, LAST_EDIT_DATE])
         self.icon = QIcon("download_icon.ico")
 
         # 设置窗口
@@ -80,6 +80,12 @@ class MainWindow(QMainWindow):
 
         self.total_label = QLabel(self.tr("总大小: 0 B"), self)
         self.status_bar.addPermanentWidget(self.total_label)
+
+        #self.total_bytes_estimate_label = QLabel(self.tr("预估大小: 0 B"), self)
+        #self.status_bar.addPermanentWidget(self.total_bytes_estimate_label)
+
+        #self.elapsed_label = QLabel(self.tr("时间: 00:00:00")， self)
+        #self.status_bar.addPermanentWidget(self.elapsed_label)
 
         #self.eta_label = QLabel(self.tr("预估剩余时间: 未知"), self)
         #self.status_bar.addPermanentWidget(self.eta_label)
@@ -281,7 +287,7 @@ class MainWindow(QMainWindow):
         match = re.search(pattern, url)
         return match is not None
     
-    # 下载视频（核心部分）
+    # 下载视频（核心代码）
     def download_video(self):
         self.video_link = self.link_edit.text()
         if self.video_link == "":
@@ -345,12 +351,15 @@ class MainWindow(QMainWindow):
         self.download_thread.progress_updated.connect(self.update_progress)
         self.download_thread.start()
 
+    # 根据下载情况更新进度条和状态栏
     def update_progress(self, downloaded_bytes, total_bytes, total_bytes_estimate, elapsed, eta, speed):
         self.progress_bar.setMaximum(total_bytes)
         self.progress_bar.setValue(downloaded_bytes)
 
         self.downloaded_label.setText(self.tr("已下载: ") + self.format_bytes(downloaded_bytes))
-        self.total_label.setText(self.tr("总大小: ")+ self.format_bytes(total_bytes))
+        self.total_label.setText(self.tr("总大小: ") + self.format_bytes(total_bytes))
+        #self.total_bytes_estimate_label.setText(self.tr("预估大小: ") + self.format_bytes(total_bytes_estimate))
+        #self.elapsed_label.setTex(self.tr("时间: ") + self.format_time(elapsed))
         #self.eta_label.setText(self.tr("预估剩余时间: ") + self.format_speed(eta))
         self.speed_label.setText(self.tr("速度: ") + self.format_speed(speed))
     
@@ -385,13 +394,14 @@ class MainWindow(QMainWindow):
         else:
             return f"{speed / (1024**3):.2f} GB/s"
     
+    # 处理下载错误
     def handleDownloadError(self, e):
         #self.status_bar.showMessage(self.tr("下载失败"))
 
         def errmsg_format(e):
             return str(e).replace('\x1b[0;31mERROR:\x1b[0m', '')
         def dl_err(hint, e):
-            QMessageBox.critical(self, self.tr("错误: "), f'{hint}: {errmsg_format(e)}')
+            QMessageBox.critical(self, self.tr("错误"), f'{hint}: {errmsg_format(e)}')
 
         if isinstance(e, yt_dlp.utils.ContentTooShortError):
             dl_err(self.tr('内容太短错误'), e)
@@ -414,7 +424,7 @@ class MainWindow(QMainWindow):
         elif isinstance(e, yt_dlp.utils.UnavailableVideoError):     
             dl_err(self.tr('视频不可用'), e)
         else:
-            QMessageBox.critical(self, self.tr("错误: "), errmsg_format(e))
+            QMessageBox.critical(self, self.tr("错误"), errmsg_format(e))
         
         self.download_button.setEnabled(True)  # 启用下载按钮
 
@@ -451,7 +461,7 @@ class MainWindow(QMainWindow):
                     result = r'^ai-[a-z]{2,3}$'
                     sub_options['writeautomaticsub'] = True
                 elif 'zh' in subtitle_langs:
-                    result = r'zh.*'
+                    result = r'^zh.*$'
 
             if not self.needs_translation:
                 result = subtitle_langs
@@ -492,7 +502,8 @@ class MainWindow(QMainWindow):
         print(self.tr("创建用户配置"))
         return {}
         
-    def config(self): # 获取部件参数,写至字典里返回
+    # 获取部件参数,写至字典里返回
+    def config(self): 
         config_rules = {} # 配置规则,从相应部件获取参数
         config_rules['save_folder'] = os.path.normpath(self.folder_edit.text()).replace("\\", "/")
         config_rules['subtitle_setting'] = self.subtitle_setting
@@ -508,11 +519,14 @@ class MainWindow(QMainWindow):
         with open(CONFIG_YML, 'w') as f:
             yaml.dump(self.config(), f) 
 
+    # 下载完成时的处理
     def handleDownloadFinished(self):
         self.progress_bar.setMaximum(100)
         self.progress_bar.setValue(100)
         self.downloaded_label.setText(self.tr("已下载: ") + self.format_bytes(self.download_thread.last_progress['downloaded_bytes']))
         self.total_label.setText(self.tr("总大小: ") + self.format_bytes(self.download_thread.last_progress['total_bytes']))
+        #self.total_bytes_estimate_label.setText(self.tr("预估大小: ") + self.format_bytes(self.download_thread.last_progress['total_bytes_estimate']))
+        #self.elapsed_label.setTex(self.tr("时间: ") + self.format_time(self.download_thread.last_progress['elapsed']))
         #self.eta_label.setText(self.tr("预估剩余时间: ") + self.format_time(self.download_thread.last_progress['eta']))
         self.speed_label.setText(self.tr("速度: ") + self.format_time(self.download_thread.last_progress['speed']))
 
@@ -552,14 +566,21 @@ class MainWindow(QMainWindow):
         elif 'actionTraditionalChinese' == action_name:
             self.switch_language('zh_TW')
 
+    # 切换界面语言
     def switch_language(self, lang_code):
         self.lang_code = lang_code
         translator = QTranslator()
         if lang_code != 'zh_CN':  # 如果选择的语言不是中文简体，则加载对应的翻译文件
             translator.load(f'translations/{lang_code}')
             app.installTranslator(translator)
+            title_trans = ""
+            if lang_code == 'zh_TW' : title_trans = "影片下載助手(yt-dlp QtGUI)"
+            elif lang_code == "en" : title_trans = "Video Downloader(yt-dlp QtGUI)"
+            else : title_trans = TITLE
+            self.title = [title_trans, VERSION, LAST_EDIT_DATE]
         else:
             app.removeTranslator(translator)
+            self.title = [TITLE, VERSION, LAST_EDIT_DATE]
         
         font = getFont(lang_code)
         app.setFont(font)
@@ -568,7 +589,8 @@ class MainWindow(QMainWindow):
 
         self.update_configs()
 
-def getFont(lang_code): #根据语言选择字体
+#根据语言选择字体
+def getFont(lang_code):
     font = QFont()
     if lang_code == 'zh_CN':
         font.setFamily('Microsoft Yahei')
@@ -589,12 +611,12 @@ class DownloadThread(QThread):
         self.ytdl_opts = ytdl_opts
         self.ytdl_opts['progress_hooks'] = [self.my_progress_hook]
         self.last_progress = {
-                'downloaded_bytes': 0,
-                'total_bytes': 0,
-                'total_bytes_estimate': 0,
-                'elapsed': 0,
-                'eta': 0,
-                'speed': 0
+                'downloaded_bytes': 0,      # 已下载的字节数
+                'total_bytes': 0,           # 整个文件的大小，如果未知则为None
+                'total_bytes_estimate': 0,  # 对最终文件大小的猜测，如果不可用则为None
+                'elapsed': 0,               # 自下载开始以来的秒数
+                'eta': 0,                   # 预计剩余时间（秒），如果未知则为None
+                'speed': 0                  # 下载速度（字节/秒），如果未知则为None
             }
 
     def run(self):

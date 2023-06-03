@@ -1,6 +1,7 @@
 import datetime
 
-VERSION = "V2.0.0"
+TITLE = "视频下载器(yt-dlp QtGUI)"
+VERSION = "V2.1.0"
 LAST_EDIT_DATE = datetime.datetime(2023, 6, 2).strftime('%x')
 
 # 用户配置

@@ -6,50 +6,50 @@
     <message>
         <location filename="../ui.py" line="331"/>
         <source>视频下载器(yt-dlp QtGUI)</source>
-        <translation>Video Downloader(yt-dlp QtGUI) - V2.0.0</translation>
+        <translation>Video Downloader(yt-dlp QtGUI)</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="183"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="211"/>
         <source>选择保存文件夹</source>
         <translation>Choose Save Folder</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="264"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="294"/>
         <source>提示</source>
         <translation>Notice</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="264"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="294"/>
         <source>请输入视频链接</source>
         <translation>Please enter video link</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="404"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="496"/>
         <source>加载用户配置...</source>
         <translation>Loading user configurations...</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="407"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="499"/>
         <source>配置加载完成</source>
         <translation>Configuration loaded</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="410"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="502"/>
         <source>创建用户配置</source>
         <translation>Create user configurations</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="430"/>
         <source>下载完成</source>
-        <translation>Download complete</translation>
+        <translation type="obsolete">Download complete</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="432"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="533"/>
         <source>成功</source>
         <translation>Success</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="432"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="533"/>
         <source>下载完成!
 是否要打开文件夹?</source>
         <translation>Download completed!
@@ -236,7 +236,7 @@ Do you want to open the folder?</translation>
         <translation>中文（繁體）</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="344"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="419"/>
         <source>已达最大下载数</source>
         <translation>Maximun downloads reached</translation>
     </message>
@@ -248,12 +248,12 @@ Do you want to open the folder?</translation>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="324"/>
         <source>下载失败</source>
-        <translation>Download Failed</translation>
+        <translation type="obsolete">Download Failed</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="315"/>
         <source>下载中...</source>
-        <translation>Downloading...</translation>
+        <translation type="obsolete">Downloading...</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="304"/>
@@ -301,52 +301,52 @@ Do you want to open the folder?</translation>
         <translation type="obsolete">UnavailableVideoError: </translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="352"/>
-        <source>错误: </source>
-        <translation>Error: </translation>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="427"/>
+        <source>错误</source>
+        <translation>Error</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="332"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="407"/>
         <source>内容太短错误</source>
         <translation>Content too short</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="334"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="409"/>
         <source>下载错误</source>
         <translation>Download error</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="336"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="411"/>
         <source>播放列表中无此条目错误</source>
         <translation>EntryNotInPlaylist Error</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="338"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="413"/>
         <source>已达到现有视频数目上限错误</source>
         <translation>ExistingVideoReached Error</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="340"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="415"/>
         <source>地理位置受限错误</source>
         <translation>GeoRestrictedError</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="342"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="417"/>
         <source>提取器错误</source>
         <translation>ExtractorError</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="346"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="421"/>
         <source>后处理错误</source>
         <translation>PostProcessingError</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="348"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="423"/>
         <source>相同文件错误</source>
         <translation>SameFileError</translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="350"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="425"/>
         <source>视频不可用</source>
         <translation>UnavailableVideo Error</translation>
     </message>
@@ -354,6 +354,41 @@ Do you want to open the folder?</translation>
         <location filename="../ui.py" line="361"/>
         <source>语言/Language</source>
         <translation>Languages</translation>
+    </message>
+    <message>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="78"/>
+        <source>已下载: 0 B</source>
+        <translation>downloaded: 0 B</translation>
+    </message>
+    <message>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="81"/>
+        <source>总大小: 0 B</source>
+        <translation>Total: 0 B</translation>
+    </message>
+    <message>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="93"/>
+        <source>速度: 0 B/s</source>
+        <translation>Speed: 0 B/s</translation>
+    </message>
+    <message>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="526"/>
+        <source>已下载: </source>
+        <translation>downloaded: </translation>
+    </message>
+    <message>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="527"/>
+        <source>总大小: </source>
+        <translation>Total: </translation>
+    </message>
+    <message>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="531"/>
+        <source>速度: </source>
+        <translation>Speed: </translation>
+    </message>
+    <message>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="387"/>
+        <source>未知</source>
+        <translation>Unknown</translation>
     </message>
 </context>
 <context>
