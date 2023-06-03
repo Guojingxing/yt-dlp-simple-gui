@@ -1,12 +1,40 @@
+# 用户相关
+config*.y*ml
 videos/
 
-# 编译相关
-build/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# setuptools distribution folder
 dist/
+build/
+eggs/
+*.egg-info/
+
+# testing
+.tox/
+nosetests.xml
+coverage/
+
+# Sphinx documentation
+docs/_build/
+
+# Mac, OS X
+*.DS_Store
+
+# IDEs
+.idea/
+*.iml
+*ants/
+
+# virtualenv
+venv/
+virtualenv/
+.gunicorn/
+
 versioninfo.txt
 Pipfile
 Pipfile.lock
-yt-dlp-simple-gui.spec
-
-# 用户配置
-config*.y*ml
+*.spec
