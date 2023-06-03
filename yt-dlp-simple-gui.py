@@ -456,8 +456,8 @@ video_quality_label.grid(row=0, column=0, sticky="e")
 
 selected_video_quality = tk.StringVar()
 video_quality_list = ("144", "240", "360", "480", "720", "1080", "1440", "2160", "4320")
-quality_menu = ttk.Combobox(video_setting_frame, values=video_quality_list, textvariable=selected_video_quality, width=10)
-quality_menu.grid(row=0, column=1, columnspan=1, padx=10, pady=5, sticky="we")
+video_quality_menu = ttk.Combobox(video_setting_frame, values=video_quality_list, textvariable=selected_video_quality, width=10)
+video_quality_menu.grid(row=0, column=1, columnspan=1, padx=10, pady=5, sticky="we")
 
 ## 创建视频格式菜单
 video_format_label = tk.Label(video_setting_frame, text="视频格式")
@@ -474,8 +474,8 @@ audio_quality_label.grid(row=1, column=0, sticky="e")
 
 selected_audio_quality = tk.StringVar()
 audio_quality_list = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10')
-quality_menu = ttk.Combobox(video_setting_frame, values=audio_quality_list, textvariable=selected_audio_quality, width=10)
-quality_menu.grid(row=1, column=1, columnspan=1, padx=10, pady=5, sticky="we")
+audio_quality_menu = ttk.Combobox(video_setting_frame, values=audio_quality_list, textvariable=selected_audio_quality, width=10)
+audio_quality_menu.grid(row=1, column=1, columnspan=1, padx=10, pady=5, sticky="we")
 
 ## 创建音频格式菜单
 audio_format_label = tk.Label(video_setting_frame, text="音频格式")

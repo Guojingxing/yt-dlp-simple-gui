@@ -37,4 +37,4 @@ virtualenv/
 versioninfo.txt
 Pipfile
 Pipfile.lock
-yt-dlp-simple-gui.spec
+*.spec
