@@ -657,20 +657,20 @@ class DownloadThread(QThread):
             speed = d.get('speed')
 
             self.progress_updated.emit(
-                downloaded_bytes,
-                total_bytes,
-                total_bytes_estimate,
-                elapsed,
-                eta,
-                speed
+                -1 if downloaded_bytes is None else downloaded_bytes,
+                -1 if total_bytes is None else total_bytes,
+                -1 if total_bytes_estimate is None else total_bytes_estimate,
+                -1 if elapsed is None else elapsed,
+                -1 if eta is None else eta,
+                -1 if speed is None else speed
             )
             self.last_progress = {
                 'downloaded_bytes': downloaded_bytes,
-                'total_bytes': -1 if total_bytes is None else total_bytes,
-                'total_bytes_estimate': -1 if total_bytes_estimate is None else total_bytes_estimate,
+                'total_bytes': total_bytes,
+                'total_bytes_estimate': total_bytes_estimate,
                 'elapsed': elapsed,
-                'eta': -1 if eta is None else eta,
-                'speed': -1 if speed is None else speed
+                'eta': eta,
+                'speed': speed
             }
         elif d['status'] == 'finished':
             self.progress_updated.emit(
