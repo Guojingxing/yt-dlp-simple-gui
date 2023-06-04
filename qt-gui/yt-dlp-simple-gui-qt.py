@@ -649,20 +649,20 @@ class DownloadThread(QThread):
 
     def my_progress_hook(self, d):
         if d['status'] == 'downloading':
-            total_bytes = d.get('total_bytes')
-            downloaded_bytes = d.get('downloaded_bytes')
-            total_bytes_estimate = d.get('total_bytes_estimate')
-            elapsed = d.get('elapsed')
-            eta = d.get('eta')
-            speed = d.get('speed')
+            total_bytes = -1 if d.get('total_bytes') is None else d.get('total_bytes')
+            downloaded_bytes = -1 if d.get('downloaded_bytes') is None else d.get('downloaded_bytes')
+            total_bytes_estimate = -1 if d.get('total_bytes_estimate') is None else d.get('total_bytes_estimate')
+            elapsed = -1 if d.get('elapsed') is None else d.get('elapsed')
+            eta = -1 if d.get('eta') is None else d.get('eta')
+            speed = -1 if d.get('speed') is None else d.get('speed')
 
             self.progress_updated.emit(
-                -1 if downloaded_bytes is None else downloaded_bytes,
-                -1 if total_bytes is None else total_bytes,
-                -1 if total_bytes_estimate is None else total_bytes_estimate,
-                -1 if elapsed is None else elapsed,
-                -1 if eta is None else eta,
-                -1 if speed is None else speed
+                downloaded_bytes,
+                total_bytes,
+                total_bytes_estimate,
+                elapsed,
+                eta,
+                speed
             )
             self.last_progress = {
                 'downloaded_bytes': downloaded_bytes,
