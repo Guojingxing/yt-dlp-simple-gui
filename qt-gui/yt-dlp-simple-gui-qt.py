@@ -372,8 +372,8 @@ class MainWindow(QMainWindow):
         self.speed_label.setText(f"{self.texts['speed_label']}: {self.format_speed(speed)}")
     
     def format_bytes(self, num_bytes):
-        if num_bytes is None:
-            return self.tr("未知")
+        if num_bytes == -1:
+            return self.text['unknown']
         elif num_bytes < 1024:
             return f"{num_bytes} B"
         elif num_bytes < 1024**2:
@@ -384,15 +384,15 @@ class MainWindow(QMainWindow):
             return f"{num_bytes / (1024**3):.2f} GB"
 
     def format_time(self, seconds):
-        if seconds is None:
-            return self.tr("未知")
+        if seconds == -1:
+            return self.text['unknown']
         minutes, seconds = divmod(int(seconds), 60)
         hours, minutes = divmod(minutes, 60)
         return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
     
     def format_speed(self, speed):
-        if speed is None:
-            return self.tr("未知")
+        if speed == -1:
+            return self.text['unknown']
         elif speed < 1024:
             return f"{speed} B/s"
         elif speed < 1024**2:
@@ -564,7 +564,7 @@ class MainWindow(QMainWindow):
             if not os.path.exists(log_file_path):
                 open(log_file_path, "w").close()
             os.startfile(log_file_path)
-            
+
         # 语言配置
         elif 'actionSimplifiedChinese' == action_name:
             self.switch_language('zh_CN')
@@ -666,11 +666,11 @@ class DownloadThread(QThread):
             )
             self.last_progress = {
                 'downloaded_bytes': downloaded_bytes,
-                'total_bytes': total_bytes,
-                'total_bytes_estimate': total_bytes_estimate,
+                'total_bytes': -1 if total_bytes is None else total_bytes,
+                'total_bytes_estimate': -1 if total_bytes_estimate is None else total_bytes_estimate,
                 'elapsed': elapsed,
-                'eta': eta,
-                'speed': speed
+                'eta': -1 if eta is None else eta,
+                'speed': -1 if speed is None else speed
             }
         elif d['status'] == 'finished':
             self.progress_updated.emit(
