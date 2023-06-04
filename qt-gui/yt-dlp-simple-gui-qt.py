@@ -448,7 +448,7 @@ class MainWindow(QMainWindow):
         # 组合“语言”和“翻译语言”的字符串
         def concatenate_strings(subtitle_trans_dest_lang, subtitle_langs):
             result = ''
-            if subtitle_langs == 'auto':
+            if self.is_youtube_url(self.video_link) and subtitle_langs == 'auto':
                 subtitle_langs = r'^[a-z]{2,3}-orig$' # YouTube的自动字幕以'-orig'结尾
                 sub_options['writeautomaticsub'] = True
                 if self.needs_translation:
@@ -460,10 +460,10 @@ class MainWindow(QMainWindow):
 
             if self.is_bilibili_url(self.video_link): # bilibili字幕
                 if subtitle_langs == 'auto':
-                    result = r'^ai-[a-z]{2,3}$'
+                    subtitle_langs = r'^ai-[a-z]{2,3}$'
                     sub_options['writeautomaticsub'] = True
                 elif 'zh' in subtitle_langs:
-                    result = r'^zh.*$'
+                    subtitle_langs = r'^zh.*$'
 
             if not self.needs_translation:
                 result = subtitle_langs
