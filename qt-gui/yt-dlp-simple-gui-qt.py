@@ -368,12 +368,12 @@ class MainWindow(QMainWindow):
         self.total_label.setText(f"{self.texts['total_label']}: {self.format_bytes(total_bytes)}")
         #self.total_bytes_estimate_label.setText(f"{self.texts['total_bytes_estimate_label']}: {self.format_bytes(total_bytes_estimate)}")
         #self.elapsed_label.setText(f"{self.texts['elapsed_label']}: {self.format_time(elapsed)}")
-        #self.eta_label.setText(f"{self.text['eta_label']}: {self.format_speed(eta)}")
+        #self.eta_label.setText(f"{self.texts['eta_label']}: {self.format_speed(eta)}")
         self.speed_label.setText(f"{self.texts['speed_label']}: {self.format_speed(speed)}")
     
     def format_bytes(self, num_bytes):
         if num_bytes == -1:
-            return self.text['unknown']
+            return self.texts['unknown']
         elif num_bytes < 1024:
             return f"{num_bytes} B"
         elif num_bytes < 1024**2:
@@ -385,14 +385,14 @@ class MainWindow(QMainWindow):
 
     def format_time(self, seconds):
         if seconds == -1:
-            return self.text['unknown']
+            return self.texts['unknown']
         minutes, seconds = divmod(int(seconds), 60)
         hours, minutes = divmod(minutes, 60)
         return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
     
     def format_speed(self, speed):
         if speed == -1:
-            return self.text['unknown']
+            return self.texts['unknown']
         elif speed < 1024:
             return f"{speed} B/s"
         elif speed < 1024**2:
