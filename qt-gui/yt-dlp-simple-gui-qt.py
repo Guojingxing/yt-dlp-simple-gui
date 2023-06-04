@@ -558,7 +558,15 @@ class MainWindow(QMainWindow):
         elif 'actionAbout' == action_name:
             self.about_dialog = AboutDialog()
             self.about_dialog.exec_()
-        elif 'actionSimplifiedChinese' == action_name: # 语言
+        elif 'actionViewLogs' == action_name:
+            current_dir = os.getcwd()
+            log_file_path = os.path.join(current_dir, "output.log")
+            if not os.path.exists(log_file_path):
+                open(log_file_path, "w").close()
+            os.startfile(log_file_path)
+            
+        # 语言配置
+        elif 'actionSimplifiedChinese' == action_name:
             self.switch_language('zh_CN')
         elif 'actionEnglish' == action_name:
             self.switch_language('en')
@@ -690,5 +698,9 @@ if __name__ == '__main__':
 
     main_window = MainWindow()
     main_window.show()
+
+    # 将命令行的输出转移至output.log中，w为复写日志，a为追加日志
+    # 若要在命令行中查看输出，注释掉此行
+    sys.stdout = open('output.log', 'w')
 
     sys.exit(app.exec_())

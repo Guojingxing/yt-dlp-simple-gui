@@ -1,6 +1,7 @@
 # 用户相关
 config*.y*ml
 videos/
+*.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

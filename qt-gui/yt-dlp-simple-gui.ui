@@ -655,6 +655,7 @@
     <property name="title">
      <string>设置</string>
     </property>
+    <addaction name="actionViewLogs"/>
     <addaction name="actionDefault"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -724,6 +725,11 @@
    </property>
    <property name="text">
     <string>English</string>
+   </property>
+  </action>
+  <action name="actionViewLogs">
+   <property name="text">
+    <string>查看日志</string>
    </property>
   </action>
  </widget>

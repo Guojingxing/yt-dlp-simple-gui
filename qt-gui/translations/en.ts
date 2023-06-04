@@ -4,39 +4,39 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui.py" line="331"/>
+        <location filename="../ui.py" line="334"/>
         <source>视频下载器(yt-dlp QtGUI)</source>
         <translation>Video Downloader(yt-dlp QtGUI)</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="211"/>
         <source>选择保存文件夹</source>
-        <translation>Choose Save Folder</translation>
+        <translation type="obsolete">Choose Save Folder</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="294"/>
         <source>提示</source>
-        <translation>Notice</translation>
+        <translation type="obsolete">Notice</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="294"/>
         <source>请输入视频链接</source>
-        <translation>Please enter video link</translation>
+        <translation type="obsolete">Please enter video link</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="496"/>
         <source>加载用户配置...</source>
-        <translation>Loading user configurations...</translation>
+        <translation type="obsolete">Loading user configurations...</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="499"/>
         <source>配置加载完成</source>
-        <translation>Configuration loaded</translation>
+        <translation type="obsolete">Configuration loaded</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="502"/>
         <source>创建用户配置</source>
-        <translation>Create user configurations</translation>
+        <translation type="obsolete">Create user configurations</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="430"/>
@@ -46,199 +46,199 @@
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="533"/>
         <source>成功</source>
-        <translation>Success</translation>
+        <translation type="obsolete">Success</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="533"/>
         <source>下载完成!
 是否要打开文件夹?</source>
-        <translation>Download completed!
+        <translation type="obsolete">Download completed!
 Do you want to open the folder?</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="332"/>
+        <location filename="../ui.py" line="335"/>
         <source>保存文件夹</source>
         <translation>Save Folder</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="333"/>
+        <location filename="../ui.py" line="336"/>
         <source>选择文件夹</source>
         <translation>Choose Folder</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="334"/>
+        <location filename="../ui.py" line="337"/>
         <source>字幕设置</source>
         <translation>Subtitle Settings</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="335"/>
+        <location filename="../ui.py" line="338"/>
         <source>仅下载字幕</source>
         <translation>Only download subs</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="336"/>
+        <location filename="../ui.py" line="339"/>
         <source>下载字幕和视频</source>
         <translation>Download subs and videos</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="337"/>
+        <location filename="../ui.py" line="340"/>
         <source>仅下载视频</source>
         <translation>Only download videos</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="338"/>
+        <location filename="../ui.py" line="341"/>
         <source>格式</source>
         <translation>Format</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="339"/>
+        <location filename="../ui.py" line="342"/>
         <source>语言</source>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="340"/>
+        <location filename="../ui.py" line="343"/>
         <source>翻译为</source>
         <translation>Translation</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="341"/>
+        <location filename="../ui.py" line="344"/>
         <source>内嵌字幕(仅mp4,webm,mkv,mov)</source>
         <translation>Embed subs(mp4,webm,mkv,mov)</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="342"/>
+        <location filename="../ui.py" line="345"/>
         <source>下载实时聊天/弹幕</source>
         <translation>Download live chats</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="343"/>
+        <location filename="../ui.py" line="346"/>
         <source>下载全部字幕</source>
         <translation>Download all subs</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="344"/>
+        <location filename="../ui.py" line="347"/>
         <source>视频设置</source>
         <translation>Video Settings</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="345"/>
+        <location filename="../ui.py" line="348"/>
         <source>视频画质</source>
         <translation>Video Quality</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="346"/>
+        <location filename="../ui.py" line="349"/>
         <source>视频格式</source>
         <translation>Video Format</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="347"/>
+        <location filename="../ui.py" line="350"/>
         <source>音质(0为最佳)</source>
         <translation>Audio Quality</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="348"/>
+        <location filename="../ui.py" line="351"/>
         <source>音频格式</source>
         <translation>Audio Format</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="349"/>
+        <location filename="../ui.py" line="352"/>
         <source>浏览器</source>
         <translation>Browser</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="350"/>
+        <location filename="../ui.py" line="353"/>
         <source>格式转换</source>
         <translation>Recode to</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="351"/>
+        <location filename="../ui.py" line="354"/>
         <source>下载设置</source>
         <translation>Download</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="352"/>
+        <location filename="../ui.py" line="355"/>
         <source>导入Cookies</source>
         <translation>Import Cookies</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="353"/>
+        <location filename="../ui.py" line="356"/>
         <source>仅下载音频</source>
         <translation>Only audio</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="354"/>
+        <location filename="../ui.py" line="357"/>
         <source>下载整个列表</source>
         <translation>Download all list</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="355"/>
+        <location filename="../ui.py" line="358"/>
         <source>下载缩略图</source>
         <translation>Download thumbnail</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="356"/>
+        <location filename="../ui.py" line="359"/>
         <source>视频链接</source>
         <translation>Video Link</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="357"/>
+        <location filename="../ui.py" line="360"/>
         <source>请输入可支持的视频链接</source>
         <translation>Please enter a supported video link</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="358"/>
+        <location filename="../ui.py" line="361"/>
         <source>开始下载</source>
         <translation>Download</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="359"/>
+        <location filename="../ui.py" line="362"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="360"/>
+        <location filename="../ui.py" line="363"/>
         <source>帮助</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="362"/>
+        <location filename="../ui.py" line="365"/>
         <source>帮助文档</source>
         <translation>Help Documents</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="363"/>
+        <location filename="../ui.py" line="366"/>
         <source>查看许可证</source>
         <translation>View license</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="364"/>
+        <location filename="../ui.py" line="367"/>
         <source>关于</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="365"/>
+        <location filename="../ui.py" line="368"/>
         <source>恢复默认值</source>
         <translation>Set as defaults</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="366"/>
+        <location filename="../ui.py" line="369"/>
         <source>中文（简体）</source>
         <translation>中文（简体）</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="368"/>
+        <location filename="../ui.py" line="371"/>
         <source>English</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="367"/>
+        <location filename="../ui.py" line="370"/>
         <source>中文（繁體）</source>
         <translation>中文（繁體）</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="419"/>
         <source>已达最大下载数</source>
-        <translation>Maximun downloads reached</translation>
+        <translation type="obsolete">Maximun downloads reached</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="291"/>
@@ -303,92 +303,97 @@ Do you want to open the folder?</translation>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="427"/>
         <source>错误</source>
-        <translation>Error</translation>
+        <translation type="obsolete">Error</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="407"/>
         <source>内容太短错误</source>
-        <translation>Content too short</translation>
+        <translation type="obsolete">Content too short</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="409"/>
         <source>下载错误</source>
-        <translation>Download error</translation>
+        <translation type="obsolete">Download error</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="411"/>
         <source>播放列表中无此条目错误</source>
-        <translation>EntryNotInPlaylist Error</translation>
+        <translation type="obsolete">EntryNotInPlaylist Error</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="413"/>
         <source>已达到现有视频数目上限错误</source>
-        <translation>ExistingVideoReached Error</translation>
+        <translation type="obsolete">ExistingVideoReached Error</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="415"/>
         <source>地理位置受限错误</source>
-        <translation>GeoRestrictedError</translation>
+        <translation type="obsolete">GeoRestrictedError</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="417"/>
         <source>提取器错误</source>
-        <translation>ExtractorError</translation>
+        <translation type="obsolete">ExtractorError</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="421"/>
         <source>后处理错误</source>
-        <translation>PostProcessingError</translation>
+        <translation type="obsolete">PostProcessingError</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="423"/>
         <source>相同文件错误</source>
-        <translation>SameFileError</translation>
+        <translation type="obsolete">SameFileError</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="425"/>
         <source>视频不可用</source>
-        <translation>UnavailableVideo Error</translation>
+        <translation type="obsolete">UnavailableVideo Error</translation>
     </message>
     <message>
-        <location filename="../ui.py" line="361"/>
+        <location filename="../ui.py" line="364"/>
         <source>语言/Language</source>
         <translation>Languages</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="78"/>
         <source>已下载: 0 B</source>
-        <translation>downloaded: 0 B</translation>
+        <translation type="obsolete">downloaded: 0 B</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="81"/>
         <source>总大小: 0 B</source>
-        <translation>Total: 0 B</translation>
+        <translation type="obsolete">Total: 0 B</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="93"/>
         <source>速度: 0 B/s</source>
-        <translation>Speed: 0 B/s</translation>
+        <translation type="obsolete">Speed: 0 B/s</translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="526"/>
         <source>已下载: </source>
-        <translation>downloaded: </translation>
+        <translation type="obsolete">downloaded: </translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="527"/>
         <source>总大小: </source>
-        <translation>Total: </translation>
+        <translation type="obsolete">Total: </translation>
     </message>
     <message>
         <location filename="../yt-dlp-simple-gui-qt.py" line="531"/>
         <source>速度: </source>
-        <translation>Speed: </translation>
+        <translation type="obsolete">Speed: </translation>
     </message>
     <message>
-        <location filename="../yt-dlp-simple-gui-qt.py" line="387"/>
+        <location filename="../yt-dlp-simple-gui-qt.py" line="395"/>
         <source>未知</source>
         <translation>Unknown</translation>
+    </message>
+    <message>
+        <location filename="../ui.py" line="372"/>
+        <source>查看日志</source>
+        <translation>View Logs</translation>
     </message>
 </context>
 <context>
