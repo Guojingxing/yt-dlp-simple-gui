@@ -31,10 +31,11 @@
 - **导入Cookie**：对于部分需要登录或者开通会员才能看的视频，可能需要勾选导入Cookie后才可下载（[V1.1.2版本](https://github.com/Guojingxing/yt-dlp-simple-gui/releases/tag/v1.1.2)及以后）
 - **下载短视频**：由于视频画质为视频最大高度，那么下载抖音、YouTube Shorts或其他短视频时，视频画质应选择大于1920的数字
 - **默认当前文件夹**：下载文件夹选填，默认下载至当前软件所在目录的`videos`下
-- **下载弹幕**：若要下载B站等弹幕网站的弹幕文件，勾选“下载全部字幕”即可
+- **下载弹幕**：若要下载B站等弹幕网站的弹幕文件，勾选“下载全部字幕”（V2.1.0新增下载弹幕选项）
 - **字幕翻译和自动生成字幕**：
   - 除YouTube外，并非所有网站都支持字幕翻译；
-  - 若要下载自动生成字幕，视频首先得有自动字幕，然后勾选“翻译”，并将右侧任意一行改为`LANG_CODE-orig`（`LANG_CODE`为[语言代码](https://github.com/yt-dlp/yt-dlp/blob/c26f9b991a0681fd3ea548d535919cec1fbbd430/yt_dlp/extractor/youtube.py#L381-L390)），另一行改成空白。如：将`en`改为`en-orig`（英语自动生成字幕）
+  - **V2.1.0版本前**：若要下载自动生成字幕，视频首先得有自动字幕，然后勾选“翻译”，并将右侧任意一行改为`LANG_CODE-orig`（`LANG_CODE`为[语言代码](https://github.com/yt-dlp/yt-dlp/blob/c26f9b991a0681fd3ea548d535919cec1fbbd430/yt_dlp/extractor/youtube.py#L381-L390)），另一行改成空白。如：将`en`改为`en-orig`（英语自动生成字幕）
+  - **V2.1.0版本及以后**：下载自动生成字幕，“语言”选择`auto`即可；若要翻译自动生成字幕，勾选“翻译为”，选择需要翻译成的语言即可。
   
 更多常见问题和注意事项，详见[Wiki#注意事项](https://github.com/Guojingxing/yt-dlp-simple-gui/wiki#注意事项)。
 ## 自编译exe文件
