@@ -1,6 +1,7 @@
 import re
 import os
 import sys
+import shutil
 
 import yt_dlp
 import yaml
@@ -43,15 +44,21 @@ class MainWindow(QMainWindow):
 
         # 获取当前地理位置的语言代码
         locale = QLocale.system().name()
-        self.lang_code = locale
+        self.lang_code = self.configs['lang_code'] if 'lang_code' in self.configs else locale
+        self.texts = TRANSLATE[self.lang_code]
 
         # 根据地理位置的语言代码加载相应的翻译文件
         translator = QTranslator()
         translator.load(f'./translations/{locale}')
         app.installTranslator(translator)
 
-        # 设置应用程序的语言环境
-        app_translator = QTranslator()
+        # 设置应用程序的语言环境，如复制粘贴菜单、QMessagebox的按钮语言等
+        source_path = './translations/qtbase_zh_CN.qm'
+        target_folder = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
+        if not os.path.exists(os.path.join(target_folder, 'qtbase_zh_CN.qm')):
+            shutil.copy2(source_path, target_folder) # 导入简体中文包
+
+        app_translator = QTranslator(app)
         app_translator.load(QLibraryInfo.location(QLibraryInfo.TranslationsPath) + f'/qtbase_{locale}.qm')
         app.installTranslator(app_translator)
 
@@ -61,7 +68,7 @@ class MainWindow(QMainWindow):
         for action in self.my_actions:
             action.triggered.connect(self.runAction)
 
-        # 语言一次只能选择一项
+        # 语言菜单一次只能选择一项
         self.lang_action_group = QActionGroup(self)
         self.lang_action_group.setExclusive(True)  # 设置动作组为互斥模式
         self.lang_action_group.addAction(self.findChild(QAction, 'actionSimplifiedChinese'))
@@ -75,22 +82,22 @@ class MainWindow(QMainWindow):
         self.progress_bar.hide()
         self.progress_bar.setValue(0)
 
-        self.downloaded_label = QLabel(self.tr("已下载: 0 B"), self)
+        self.downloaded_label = QLabel(self)
         self.status_bar.addPermanentWidget(self.downloaded_label)
 
-        self.total_label = QLabel(self.tr("总大小: 0 B"), self)
+        self.total_label = QLabel(self)
         self.status_bar.addPermanentWidget(self.total_label)
 
-        #self.total_bytes_estimate_label = QLabel(self.tr("预估大小: 0 B"), self)
+        #self.total_bytes_estimate_label = QLabel(self)
         #self.status_bar.addPermanentWidget(self.total_bytes_estimate_label)
 
-        #self.elapsed_label = QLabel(self.tr("时间: 00:00:00")， self)
+        #self.elapsed_label = QLabel(self)
         #self.status_bar.addPermanentWidget(self.elapsed_label)
 
-        #self.eta_label = QLabel(self.tr("预估剩余时间: 未知"), self)
+        #self.eta_label = QLabel(self)
         #self.status_bar.addPermanentWidget(self.eta_label)
 
-        self.speed_label = QLabel(self.tr("速度: 0 B/s"), self)
+        self.speed_label = QLabel(self)
         self.status_bar.addPermanentWidget(self.speed_label)
        
         # 配置文件夹widgets
@@ -185,7 +192,8 @@ class MainWindow(QMainWindow):
         self.download_button.clicked.connect(self.download_video)
         self.shortcut = QShortcut(QKeySequence(Qt.Key_Enter), self)
         self.shortcut.activated.connect(self.download_button.click)
-
+        
+        self.update_texts(self.lang_code)
         self.init_parameters()
 
     # 根据本地配置文件初始化所有widget的参数值
@@ -208,7 +216,7 @@ class MainWindow(QMainWindow):
 
     # 选择文件夹
     def selectFolder(self):
-        folder_path = QFileDialog.getExistingDirectory(self, self.tr("选择保存文件夹"))
+        folder_path = QFileDialog.getExistingDirectory(self, self.texts['choose_folder'])
         if folder_path:
             self.folder_edit.setText(folder_path)
 
@@ -261,7 +269,7 @@ class MainWindow(QMainWindow):
 
     # 判断是否为YouTube链接
     def is_youtube_url(self, video_link):
-        pattern = r"(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]+)(&\S+)?"
+        pattern = r"(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/|be\.com\/shorts\/)([\w\-_]+)(&\S+)?"
         match = re.search(pattern, video_link)
         return match is not None
 
@@ -291,7 +299,7 @@ class MainWindow(QMainWindow):
     def download_video(self):
         self.video_link = self.link_edit.text()
         if self.video_link == "":
-            QMessageBox.information(self, self.tr("提示"), self.tr("请输入视频链接"))
+            QMessageBox.information(self, self.texts['notice'], self.texts['please_enter_link'])
             return
 
         # 所有下载参数
@@ -356,12 +364,12 @@ class MainWindow(QMainWindow):
         self.progress_bar.setMaximum(total_bytes)
         self.progress_bar.setValue(downloaded_bytes)
 
-        self.downloaded_label.setText(self.tr("已下载: ") + self.format_bytes(downloaded_bytes))
-        self.total_label.setText(self.tr("总大小: ") + self.format_bytes(total_bytes))
-        #self.total_bytes_estimate_label.setText(self.tr("预估大小: ") + self.format_bytes(total_bytes_estimate))
-        #self.elapsed_label.setTex(self.tr("时间: ") + self.format_time(elapsed))
-        #self.eta_label.setText(self.tr("预估剩余时间: ") + self.format_speed(eta))
-        self.speed_label.setText(self.tr("速度: ") + self.format_speed(speed))
+        self.downloaded_label.setText(f"{self.texts['downloaded_label']}: {self.format_bytes(downloaded_bytes)}")
+        self.total_label.setText(f"{self.texts['total_label']}: {self.format_bytes(total_bytes)}")
+        #self.total_bytes_estimate_label.setText(f"{self.texts['total_bytes_estimate_label']}: {self.format_bytes(total_bytes_estimate)}")
+        #self.elapsed_label.setText(f"{self.texts['elapsed_label']}: {self.format_time(elapsed)}")
+        #self.eta_label.setText(f"{self.text['eta_label']}: {self.format_speed(eta)}")
+        self.speed_label.setText(f"{self.texts['speed_label']}: {self.format_speed(speed)}")
     
     def format_bytes(self, num_bytes):
         if num_bytes is None:
@@ -401,30 +409,24 @@ class MainWindow(QMainWindow):
         def errmsg_format(e):
             return str(e).replace('\x1b[0;31mERROR:\x1b[0m', '')
         def dl_err(hint, e):
-            QMessageBox.critical(self, self.tr("错误"), f'{hint}: {errmsg_format(e)}')
+            QMessageBox.critical(self, self.texts['DownloadError'], f'{hint}: {errmsg_format(e)}')
 
-        if isinstance(e, yt_dlp.utils.ContentTooShortError):
-            dl_err(self.tr('内容太短错误'), e)
-        elif isinstance(e, yt_dlp.utils.DownloadError):   
-            dl_err(self.tr('下载错误'), e)
-        elif isinstance(e, yt_dlp.utils.EntryNotInPlaylist): 
-            dl_err(self.tr('播放列表中无此条目错误'), e)
-        elif isinstance(e, yt_dlp.utils.ExistingVideoReached): 
-            dl_err(self.tr('已达到现有视频数目上限错误'), e) 
-        elif isinstance(e, yt_dlp.utils.GeoRestrictedError): 
-            dl_err(self.tr('地理位置受限错误'), e)
-        elif isinstance(e, yt_dlp.utils.ExtractorError): 
-            dl_err(self.tr('提取器错误'), e)
-        elif isinstance(e, yt_dlp.utils.MaxDownloadsReached):
-            dl_err(self.tr('已达最大下载数'), '')
-        elif isinstance(e, yt_dlp.utils.PostProcessingError):  
-            dl_err(self.tr('后处理错误'), e)
-        elif isinstance(e, yt_dlp.utils.SameFileError):    
-            dl_err(self.tr('相同文件错误'), e)
-        elif isinstance(e, yt_dlp.utils.UnavailableVideoError):     
-            dl_err(self.tr('视频不可用'), e)
+        error_list = (
+            yt_dlp.utils.ContentTooShortError,
+            yt_dlp.utils.DownloadError,
+            yt_dlp.utils.EntryNotInPlaylist,
+            yt_dlp.utils.ExistingVideoReached,
+            yt_dlp.utils.GeoRestrictedError,
+            yt_dlp.utils.ExtractorError,
+            yt_dlp.utils.MaxDownloadsReached,
+            yt_dlp.utils.PostProcessingError,
+            yt_dlp.utils.SameFileError,
+            yt_dlp.utils.UnavailableVideoError
+            )
+        if isinstance(e, error_list):
+            dl_err(self.texts[type(e).__name__], e)
         else:
-            QMessageBox.critical(self, self.tr("错误"), errmsg_format(e))
+            QMessageBox.critical(self, self.texts['error'], errmsg_format(e))
         
         self.download_button.setEnabled(True)  # 启用下载按钮
 
@@ -493,13 +495,10 @@ class MainWindow(QMainWindow):
         file_path = CONFIG_YML
         if os.path.exists(file_path):
             with open(file_path, 'r') as f:
-                print(self.tr("加载用户配置..."))
                 all_configs = yaml.safe_load(f)
             if all_configs is not None:
-                print(self.tr("配置加载完成"))
                 return all_configs
         # 处理文件不存在或为空的情况，返回空字典
-        print(self.tr("创建用户配置"))
         return {}
         
     # 获取部件参数,写至字典里返回
@@ -523,14 +522,14 @@ class MainWindow(QMainWindow):
     def handleDownloadFinished(self):
         self.progress_bar.setMaximum(100)
         self.progress_bar.setValue(100)
-        self.downloaded_label.setText(self.tr("已下载: ") + self.format_bytes(self.download_thread.last_progress['downloaded_bytes']))
-        self.total_label.setText(self.tr("总大小: ") + self.format_bytes(self.download_thread.last_progress['total_bytes']))
-        #self.total_bytes_estimate_label.setText(self.tr("预估大小: ") + self.format_bytes(self.download_thread.last_progress['total_bytes_estimate']))
-        #self.elapsed_label.setTex(self.tr("时间: ") + self.format_time(self.download_thread.last_progress['elapsed']))
-        #self.eta_label.setText(self.tr("预估剩余时间: ") + self.format_time(self.download_thread.last_progress['eta']))
-        self.speed_label.setText(self.tr("速度: ") + self.format_time(self.download_thread.last_progress['speed']))
+        self.downloaded_label.setText(f"{self.texts['downloaded_label']}: {self.format_bytes(self.download_thread.last_progress['downloaded_bytes'])}")
+        self.total_label.setText(f"{self.texts['total_label']}: {self.format_bytes(self.download_thread.last_progress['total_bytes'])}")
+        #self.total_bytes_estimate_label.setText(f"{self.texts['total_bytes_estimate_label']}: {self.format_bytes(self.download_thread.last_progress['total_bytes_estimate'])}")
+        #self.elapsed_label.setText(f"{self.texts['elapsed_label']}: {self.format_time(self.download_thread.last_progress['elapsed'])}")
+        #self.eta_label.setText(f"{self.texts['eta_label']}: {self.format_time(self.download_thread.last_progress['eta'])}")
+        self.speed_label.setText(f"{self.texts['speed_label']}: {self.format_speed(self.download_thread.last_progress['speed'])}")
 
-        if QMessageBox.Yes == QMessageBox.question(self, self.tr("成功"), self.tr("下载完成!\n是否要打开文件夹?"), QMessageBox.Yes | QMessageBox.No):
+        if QMessageBox.Yes == QMessageBox.question(self, self.texts['success'], self.texts['open_folder?'], QMessageBox.Yes | QMessageBox.No):
             abs_folder = os.path.abspath(self.save_folder)
             if not os.path.exists(abs_folder):
                 os.makedirs(abs_folder)
@@ -585,9 +584,20 @@ class MainWindow(QMainWindow):
         font = getFont(lang_code)
         app.setFont(font)
         self.setFont(font)
-        self.ui.retranslateUi(self) # 开发的时候注释掉这一行
+        self.ui.retranslateUi(self)
+        self.update_texts(lang_code)
 
         self.update_configs()
+    
+    # 该文件yt-dlp-simple-gui-qt.py的文本语言转换
+    def update_texts(self, lang_code):
+        self.texts = TRANSLATE[lang_code]
+        self.downloaded_label.setText(f"{self.texts['downloaded_label']}: 0 B")
+        self.total_label.setText(f"{self.texts['total_label']}: 0 B")
+        #self.total_bytes_estimate_label.setText(f"{self.texts['total_bytes_estimate_label']}: 0 B")
+        #self.elapsed_label.setText(f"{self.texts['elapsed_label']}: 00:00:00")
+        #self.eta_label.setText(f"{self.texts['eta_label']}: {self.texts['unknown']}")
+        self.speed_label.setText(f"{self.texts['speed_label']}: 0 B/s")
 
 #根据语言选择字体
 def getFont(lang_code):
