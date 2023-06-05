@@ -324,14 +324,7 @@ class MainWindow(QMainWindow):
                 'key': 'FFmpegThumbnailsConvertor',
                 'format': 'jpg', # 此处设为jpg，也可修改为其他的
             })
-
-        # 如果想重新编码视频
-        if self.recode_video:
-            ytdl_opts['postprocessors'].append({
-                'key': 'FFmpegVideoConvertor',
-                'preferedformat': self.recode_video_format # 设置重新编码的格式
-            })
-
+        
         # 如果只想下载音频
         if self.only_download_audio:
             ytdl_opts['format'] = f"{self.audio_format}/bestaudio/best"
@@ -339,6 +332,13 @@ class MainWindow(QMainWindow):
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': self.audio_format,
                 'preferredquality': self.audio_quality
+            })
+
+        # 如果想重新编码视频
+        if self.recode_video:
+            ytdl_opts['postprocessors'].append({
+                'key': 'FFmpegVideoConvertor',
+                'preferedformat': self.recode_video_format # 设置重新编码的格式
             })
 
         # 如果下载整个播放列表
