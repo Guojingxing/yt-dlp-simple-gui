@@ -407,7 +407,7 @@ class MainWindow(QMainWindow):
         #self.status_bar.showMessage(self.tr("下载失败"))
 
         def errmsg_format(e):
-            return str(e).replace('\x1b[0;31mERROR:\x1b[0m', '')
+            return str(e).replace('\x1b[0;31mERROR:\x1b[0m', '').replace('ERROR: ', '')
         def dl_err(hint, e):
             QMessageBox.critical(self, self.texts['DownloadError'], f'{hint}: {errmsg_format(e)}')
 
